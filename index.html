@@ -382,11 +382,16 @@ function cargarAnalista(){
 }
 function parseAnalisis(texto){
   var m = {veredicto:null, razon:null, siguiente:null};
-  texto.split("\n").forEach(function(l){
-    var mv = l.match(/VEREDICTO:\s*(abrio|parcial|defendio)/i); if(mv) m.veredicto = mv[1].toLowerCase();
-    var mr = l.match(/POR QUE:\s*(.+)/i); if(mr) m.razon = mr[1].trim();
-    var ms = l.match(/SIGUIENTE:\s*(.+)/i); if(ms) m.siguiente = ms[1].trim();
-  });
+  var mv = texto.match(/veredicto\s*:?\s*(abri[oó]|parcial|defendi[oó])/i);
+  if(mv) m.veredicto = mv[1].toLowerCase().replace("ó","o");
+  var mr = texto.match(/por\s*qu[eé]\s*:?\s*(.+)/i);
+  if(mr) m.razon = mr[1].split("\n")[0].trim();
+  var ms = texto.match(/siguiente\s*:?\s*(.+)/i);
+  if(ms) m.siguiente = ms[1].split("\n")[0].trim();
+  if(!m.veredicto){
+    var suelto = texto.match(/\b(abri[oó]|parcial|defendi[oó])\b/i);
+    if(suelto) m.veredicto = suelto[1].toLowerCase().replace("ó","o");
+  }
   return m.veredicto ? m : null;
 }
 function analizar(tu, ia){
@@ -401,8 +406,18 @@ function analizar(tu, ia){
   return engineAnalista.chat.completions.create({messages:[{role:"user", content:prompt}], max_tokens:220, temperature:0.5})
     .then(function(res){
       var texto = (res.choices && res.choices[0] && res.choices[0].message && res.choices[0].message.content) || "";
-      return parseAnalisis(texto) || heuristica(tu, ia);
-    }).catch(function(){ return heuristica(tu, ia); });
+      console.log("[analista] respuesta cruda:", texto);
+      var parsed = parseAnalisis(texto);
+      if(parsed){
+        if(!parsed.razon) parsed.razon = "(el analista no dio una razón en un formato reconocible, pero sí un veredicto)";
+        return parsed;
+      }
+      console.warn("[analista] no pude interpretar el formato, cayendo al respaldo por patrones.");
+      return heuristica(tu, ia);
+    }).catch(function(err){
+      console.error("[analista] falló la llamada:", err);
+      return heuristica(tu, ia);
+    });
 }
 function generarApertura(){
   if(!engineAnalista) return Promise.resolve(aperturaRespaldo());
@@ -412,8 +427,9 @@ function generarApertura(){
   return engineAnalista.chat.completions.create({messages:[{role:"user", content:prompt}], max_tokens:60, temperature:0.7})
     .then(function(res){
       var texto = (res.choices && res.choices[0] && res.choices[0].message && res.choices[0].message.content) || "";
+      console.log("[analista] apertura generada:", texto);
       return texto.trim() || aperturaRespaldo();
-    }).catch(function(){ return aperturaRespaldo(); });
+    }).catch(function(err){ console.error("[analista] falló la apertura:", err); return aperturaRespaldo(); });
 }
 
 function calcularDelta(veredicto, esConsulta){
@@ -460,9 +476,9 @@ function render(){
   } else if(t.analizando){
     esqAn.className = "contenido-esquina vacio"; esqAn.innerHTML = "Leyendo…";
     zonaVeredicto.classList.add("oculto"); analizandoTxt.classList.remove("oculto");
-  } else if(t.veredicto === null && t.razon !== undefined && t.razon !== null){
+  } else if(t.veredicto === null){
     esqAn.className = "contenido-esquina";
-    esqAn.innerHTML = '<p class="razon-analista">' + escapeHtml(t.razon) + '</p>';
+    esqAn.innerHTML = t.razon ? '<p class="razon-analista">' + escapeHtml(t.razon) + '</p>' : "";
     analizandoTxt.classList.add("oculto");
     zonaVeredicto.classList.remove("oculto");
     Array.prototype.forEach.call(zonaVeredicto.querySelectorAll(".pill"), function(p){
