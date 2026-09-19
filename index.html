@@ -8,129 +8,127 @@
 *{box-sizing:border-box;}
 html,body{margin:0;padding:0;}
 body{
-  background:#FFFFFF; color:#141414;
+  background:#F4F1EA;
+  color:#141414;
   font-family:"Courier New", monospace;
   font-size:16px;
   min-height:100vh;
-  padding:20px 14px 70px;
+  padding:18px 12px 70px;
 }
 :focus-visible{outline:3px solid #C98A00; outline-offset:2px;}
 button{font-family:inherit; cursor:pointer;}
 button:disabled{opacity:0.4; cursor:not-allowed;}
-hr{border:none; border-top:1px solid #E7E7E7; margin:18px 0;}
 .oculto{display:none !important;}
 
-.pagina{max-width:680px; margin:0 auto; position:relative;}
+.pagina{max-width:920px; margin:0 auto; position:relative;}
 
 .boton-primario{background:#141414; color:#fff; border:2px solid #141414; padding:11px 22px; font-weight:700; font-size:15px;}
 .boton-primario:hover{background:#000;}
 .link-boton{background:none; border:none; color:#6B6B6B; font-size:12px; text-decoration:underline; padding:5px 3px;}
 .link-boton:hover{color:#141414;}
 
-/* ---------- cabecera ---------- */
-.fila-config{display:flex; align-items:center; gap:10px; margin-bottom:14px; flex-wrap:wrap;}
+/* ---------- config ---------- */
+.fila-config{display:flex; align-items:center; gap:10px; margin-bottom:12px; flex-wrap:wrap;}
 .fila-config .campo-mini{flex:1; min-width:140px;}
 .fila-config label{font-size:11px; color:#9A9A9A; display:block; margin-bottom:2px;}
 .fila-config input{width:100%; font-family:inherit; font-size:14px; padding:5px 2px; border:none; border-bottom:2px solid #D8D8D8; background:transparent;}
 .fila-config input#input-ia-nombre{border-bottom-color:#D6301B; color:#D6301B; font-weight:700;}
-.btn-ayuda{
-  width:28px; height:28px; border:1.5px solid #141414; background:#fff; color:#141414; font-size:14px; font-weight:700;
-  display:flex; align-items:center; justify-content:center; flex:0 0 auto;
-}
+.btn-ayuda{width:28px; height:28px; border:1.5px solid #141414; background:#fff; color:#141414; font-size:14px; font-weight:700; display:flex; align-items:center; justify-content:center; flex:0 0 auto;}
 
-/* ---------- estado del analista ---------- */
-.estado-analista{font-size:12px; color:#9A9A9A; margin-bottom:8px; display:flex; align-items:center; gap:8px;}
-.progreso-barra{flex:1; height:8px; background:#F1F1F1; border:1px solid #141414;}
+.estado-analista{font-size:12px; color:#9A9A9A; margin-bottom:14px; display:flex; align-items:center; gap:8px;}
+.progreso-barra{flex:1; height:8px; background:#EDE6D3; border:1px solid #141414;}
 .progreso-relleno{height:100%; width:0%; background:#C98A00; transition:width .2s linear;}
 .estado-analista.listo{color:#1F8A4C;}
-.estado-analista.sin{color:#9A9A9A;}
 
-/* ---------- HUD tipo jefe ---------- */
-.hud{display:flex; align-items:center; gap:8px; margin-bottom:4px;}
-.hud-lado{font-weight:700; font-size:1.15rem; text-transform:uppercase; white-space:nowrap;}
-.hud-lado.tu{color:#1D5FD1;}
-.hud-lado.ia{color:#D6301B; max-width:38vw; overflow:hidden; text-overflow:ellipsis;}
-.hud-barra{flex:1; height:26px; background:#F1F1F1; border:3px solid #141414; position:relative; overflow:hidden;}
-.hud-relleno{height:100%; width:0%; background:#C98A00; transition:width .4s cubic-bezier(.2,.7,.3,1);}
-.hud-sub{text-align:center; font-size:13px; color:#6B6B6B; margin-bottom:18px; letter-spacing:0.03em;}
-.hud-sub b{color:#141414;}
+/* ---------- escenario de ring ---------- */
+.ring{position:relative; background:#EDE0BE; border:6px solid #141414; padding:26px 14px 16px; margin-bottom:16px;}
+.ring::before{content:""; position:absolute; top:8px; left:10px; right:10px; height:10px;
+  background:repeating-linear-gradient(to right, #D6301B 0 26px, #fff 26px 30px, #1D5FD1 30px 56px, #fff 56px 60px);}
+.poste{position:absolute; width:12px; height:12px; background:#141414;}
+.poste.tl{top:2px; left:2px;} .poste.tr{top:2px; right:2px;} .poste.bl{bottom:2px; left:2px;} .poste.br{bottom:2px; right:2px;}
 
-/* ---------- combatientes ---------- */
-.combate{display:flex; align-items:center; justify-content:center; gap:6px; margin-bottom:20px;}
-.combatiente{width:130px; text-align:center; flex:0 0 auto;}
-.combatiente svg{width:104px; height:122px; image-rendering:pixelated; animation:idle-bob 1.6s ease-in-out infinite;}
-.combatiente.ia svg{animation-delay:.3s;}
-.combatiente .nombre{font-size:12px; margin-top:4px; font-weight:700; word-break:break-word;}
-.combatiente.tu .nombre{color:#1D5FD1;}
-.combatiente.ia .nombre{color:#D6301B;}
-#svg-caja{width:150px; flex:0 0 auto; position:relative;}
+/* ---------- anuncio de ronda ---------- */
+.anuncio-ronda{text-align:center; margin-bottom:18px;}
+.anuncio-ronda .etiqueta{font-weight:700; letter-spacing:0.08em; font-size:0.85rem; color:#8A6100; margin:0 0 4px;}
+.pregunta-actual{
+  font-size:1.15rem; font-weight:700; line-height:1.4; max-width:56ch; margin:0 auto 10px;
+  background:#fff; border:2px solid #141414; padding:10px 16px;
+}
+.pregunta-actual[contenteditable]:focus{outline:2px dashed #C98A00;}
 
-@keyframes idle-bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-4px);}}
-.combatiente.tu.atacando svg{animation:atacar-tu .3s ease-out;}
-@keyframes atacar-tu{0%{transform:translateX(0);}45%{transform:translateX(22px) rotate(-6deg) scale(1.06);}100%{transform:translateX(0);}}
-.combatiente.ia.atacando svg{animation:atacar-ia .3s ease-out;}
-@keyframes atacar-ia{0%{transform:translateX(0);}45%{transform:translateX(-22px) rotate(6deg) scale(1.06);}100%{transform:translateX(0);}}
-.combatiente.golpeado svg{animation:recoil .5s ease-out;}
-@keyframes recoil{0%{transform:translateX(0) rotate(0);}20%{transform:translateX(var(--recoil-dir,14px)) rotate(var(--recoil-rot,10deg));}100%{transform:translateX(0) rotate(0);}}
+/* ---------- las tres columnas ---------- */
+.combate-ring{display:flex; align-items:stretch; gap:14px;}
+.esquina{flex:1; min-width:0; background:#fff; border:3px solid #141414; padding:12px; display:flex; flex-direction:column;}
+.esquina.roja{border-top:8px solid #D6301B;}
+.esquina.azul{border-top:8px solid #1D5FD1;}
+.titulo-esquina{font-weight:700; font-size:0.85rem; text-transform:uppercase; margin:0 0 8px; display:flex; align-items:center; gap:8px;}
+.esquina.roja .titulo-esquina{color:#D6301B;}
+.esquina.azul .titulo-esquina{color:#1D5FD1;}
+.sprite-esquina{width:34px; height:40px; image-rendering:pixelated; flex:0 0 auto; animation:idle-bob 1.6s ease-in-out infinite;}
+.esquina.azul .sprite-esquina{animation-delay:.3s;}
+.contenido-esquina{font-size:14px; line-height:1.5; flex:1;}
+.contenido-esquina.vacio{color:#B0B0B0; font-style:italic;}
+.contenido-esquina textarea{width:100%; font-family:inherit; font-size:14px; padding:8px; border:1.5px solid #D8D8D8; min-height:6em;}
+.contenido-esquina button{margin-top:8px;}
+.razon-analista{font-size:12px; color:#6B6B6B; margin:6px 0 0;}
+
+.centro-ring{flex:0 0 auto; width:120px; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; padding-top:6px;}
+#svg-caja{width:100px; position:relative;}
+.medidor-barra{width:100%; height:16px; background:#fff; border:2px solid #141414; margin-top:10px; overflow:hidden;}
+.medidor-relleno{height:100%; width:0%; background:#C98A00; transition:width .4s cubic-bezier(.2,.7,.3,1);}
+.medidor-txt{font-size:11px; color:#6B6B6B; margin-top:4px; text-align:center;}
+
+@keyframes idle-bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-3px);}}
+.sprite-esquina.atacando{animation:atacar .3s ease-out;}
+@keyframes atacar{0%{transform:translateX(0) scale(1);}45%{transform:translateX(6px) scale(1.15);}100%{transform:translateX(0) scale(1);}}
+.esquina.golpeada{animation:recoil-esquina .5s ease-out;}
+@keyframes recoil-esquina{0%{transform:translateX(0);}20%{transform:translateX(var(--dir,-8px)) rotate(var(--rot,-1deg));}100%{transform:translateX(0);}}
 
 #svg-caja.golpe-abre{animation:flash-abre .55s ease-out;}
-@keyframes flash-abre{0%{filter:brightness(1) drop-shadow(0 0 0 transparent);}30%{filter:brightness(2.2) drop-shadow(0 0 22px #C98A00);}100%{filter:brightness(1);}}
+@keyframes flash-abre{0%{filter:brightness(1);}30%{filter:brightness(2.2) drop-shadow(0 0 20px #C98A00);}100%{filter:brightness(1);}}
 #svg-caja.golpe-defiende{animation:flash-defiende .55s ease-out;}
 @keyframes flash-defiende{0%{filter:brightness(1);}30%{filter:brightness(0.45);}100%{filter:brightness(1);}}
 #svg-caja.golpe-parcial{animation:flash-parcial .55s ease-out;}
-@keyframes flash-parcial{0%{filter:brightness(1);}30%{filter:brightness(1.6) drop-shadow(0 0 14px #C98A00);}100%{filter:brightness(1);}}
+@keyframes flash-parcial{0%{filter:brightness(1);}30%{filter:brightness(1.6) drop-shadow(0 0 12px #C98A00);}100%{filter:brightness(1);}}
 
 .pagina.shake{animation:shake-arena .4s ease-in-out;}
-@keyframes shake-arena{0%,100%{transform:translateX(0);}15%{transform:translateX(-9px);}30%{transform:translateX(7px);}45%{transform:translateX(-6px);}60%{transform:translateX(5px);}75%{transform:translateX(-3px);}90%{transform:translateX(2px);}}
+@keyframes shake-arena{0%,100%{transform:translateX(0);}15%{transform:translateX(-8px);}30%{transform:translateX(6px);}45%{transform:translateX(-5px);}60%{transform:translateX(4px);}75%{transform:translateX(-2px);}90%{transform:translateX(1px);}}
 
-#flash-overlay{position:fixed; inset:0; pointer-events:none; opacity:0; z-index:70; transition:opacity .12s ease-out;}
-#flash-overlay.on{opacity:0.4; transition:opacity 0s;}
+#flash-overlay{position:fixed; inset:0; pointer-events:none; opacity:0; z-index:70;}
+#flash-overlay.on{opacity:0.4; transition:none;}
+#flash-overlay:not(.on){transition:opacity .12s ease-out;}
 
-.flotante-delta{
-  position:absolute; left:50%; top:-10px; transform:translateX(-50%);
-  font-weight:700; font-size:1.4rem; pointer-events:none; white-space:nowrap;
-  animation:flotar 1.1s ease-out forwards;
-}
+.flotante-delta{position:absolute; left:50%; top:-8px; transform:translateX(-50%); font-weight:700; font-size:1.3rem; pointer-events:none; white-space:nowrap; animation:flotar 1.1s ease-out forwards;}
 @keyframes flotar{0%{opacity:0; transform:translate(-50%,10px) scale(0.7);}15%{opacity:1; transform:translate(-50%,0) scale(1.15);}100%{opacity:0; transform:translate(-50%,-30px) scale(1);}}
 @media (prefers-reduced-motion: reduce){
-  .combatiente svg,#svg-caja.golpe-abre,#svg-caja.golpe-defiende,#svg-caja.golpe-parcial,.pagina.shake,.flotante-delta,#flash-overlay{animation:none !important; transition:none !important;}
+  .sprite-esquina,.esquina.golpeada,#svg-caja.golpe-abre,#svg-caja.golpe-defiende,#svg-caja.golpe-parcial,.pagina.shake,.flotante-delta,#flash-overlay{animation:none !important; transition:none !important;}
 }
 
-/* ---------- transcripción ---------- */
-.transcripcion{margin-bottom:18px;}
-.vacio{color:#9A9A9A; font-size:14px; font-style:italic;}
-.turno{margin-bottom:18px;}
-.etiqueta-quien{font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:3px;}
-.etiqueta-quien.analista{color:#8A6100;}
-.etiqueta-quien.ia{color:#D6301B;}
+@media (max-width:640px){
+  .combate-ring{flex-direction:column;}
+  .centro-ring{width:100%; flex-direction:row; justify-content:center; gap:14px;}
+  .medidor-barra{width:140px; margin-top:0;}
+}
 
-.sugerencia-caja{border-left:4px solid #C98A00; background:#FBF3E0; padding:10px 12px; margin-bottom:8px;}
-.sugerencia-caja textarea{width:100%; font-family:inherit; font-size:15px; border:none; background:transparent; resize:vertical; min-height:3em; padding:0;}
-.sugerencia-caja .acciones{display:flex; gap:8px; margin-top:8px;}
-
-.msj{font-size:15px; line-height:1.5; margin:0 0 8px; padding-left:12px; border-left:4px solid transparent;}
-.msj.tu{border-color:#1D5FD1;}
-.msj.ia{border-color:#D6301B;}
-
-.pegar-inline{margin:8px 0 14px;}
-.pegar-inline textarea{width:100%; font-family:inherit; font-size:15px; padding:9px 10px; border:1.5px solid #D8D8D8; min-height:5em;}
-.pegar-inline button{margin-top:8px;}
-
-.analizando{color:#9A9A9A; font-size:13px; font-style:italic; margin:0 0 10px;}
-.razon{font-size:13px; color:#6B6B6B; margin:0 0 10px; padding-left:12px;}
-
-.veredicto-pills{display:flex; gap:8px; margin:0 0 12px; flex-wrap:wrap;}
-.pill{border:2px solid #D8D8D8; background:#fff; padding:8px 16px; font-size:13px; font-weight:700;}
+/* ---------- veredicto ---------- */
+.veredicto-zona{text-align:center; margin:16px 0 4px;}
+.veredicto-pills{display:flex; gap:10px; justify-content:center; flex-wrap:wrap;}
+.pill{border:2px solid #D8D8D8; background:#fff; padding:9px 18px; font-size:14px; font-weight:700;}
 .pill.abrio{border-color:#1F8A4C; color:#1F8A4C;}
 .pill.parcial{border-color:#C98A00; color:#8A6100;}
 .pill.defendio{border-color:#D6301B; color:#D6301B;}
 .pill.sugerido{box-shadow:0 0 0 3px currentColor inset;}
+.analizando-txt{color:#9A9A9A; font-size:13px; font-style:italic; text-align:center; margin:14px 0;}
 
-.resultado{font-size:13px; color:#6B6B6B; margin:0 0 14px;}
-.resultado b{color:#141414;}
+/* ---------- historial ---------- */
+.historial{margin-top:22px;}
+.historial summary{font-size:12px; color:#6B6B6B; cursor:pointer;}
+.historial-lista{margin-top:8px; font-size:12px; color:#6B6B6B;}
+.historial-lista div{border-bottom:1px dotted #D8D8D8; padding:4px 0;}
+.historial-lista b{color:#141414;}
 
-.pie-acciones{display:flex; gap:16px; flex-wrap:wrap; border-top:1px solid #E7E7E7; padding-top:14px;}
-footer.creditos{max-width:680px; margin:22px auto 0; color:#9A9A9A; font-size:11px; text-align:center;}
+.pie-acciones{display:flex; gap:16px; flex-wrap:wrap; border-top:1px solid #E2DBC8; padding-top:14px; margin-top:16px;}
+footer.creditos{max-width:920px; margin:22px auto 0; color:#9A9A9A; font-size:11px; text-align:center;}
 
 .overlay-banner{position:fixed; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; z-index:80;}
 .overlay-banner .txt{font-weight:700; text-transform:uppercase; letter-spacing:0.03em; font-size:clamp(1.8rem,10vw,4rem); color:#C98A00; opacity:0; transform:scale(0.6); transition:opacity .15s ease, transform .15s cubic-bezier(.3,1.5,.4,1); background:#fff; padding:6px 22px; border:4px solid #141414;}
@@ -164,49 +162,66 @@ footer.creditos{max-width:680px; margin:22px auto 0; color:#9A9A9A; font-size:11
     <button class="btn-ayuda" id="btn-ayuda" aria-label="¿Cómo se juega?">?</button>
   </div>
 
-  <p class="estado-analista sin" id="estado-analista">
+  <p class="estado-analista" id="estado-analista">
     <span id="estado-analista-texto">Cargando tu analista…</span>
     <span class="progreso-barra"><span class="progreso-relleno" id="progreso-relleno"></span></span>
   </p>
 
-  <div class="hud">
-    <span class="hud-lado tu">TÚ</span>
-    <div class="hud-barra"><div class="hud-relleno" id="hud-relleno"></div></div>
-    <span class="hud-lado ia" id="txt-nombre-ia-hud">IA</span>
-  </div>
-  <p class="hud-sub">LA CAJA — <b id="txt-grietas">0%</b> agrietada</p>
+  <div class="ring" id="ring">
+    <span class="poste tl"></span><span class="poste tr"></span><span class="poste bl"></span><span class="poste br"></span>
 
-  <div class="combate">
-    <div class="combatiente tu">
-      <svg viewBox="0 0 48 56" shape-rendering="crispEdges">
-        <rect x="18" y="4" width="12" height="12" fill="#1D5FD1"/>
-        <rect x="16" y="16" width="16" height="18" fill="#1D5FD1"/>
-        <rect x="4" y="16" width="12" height="8" fill="#1D5FD1"/>
-        <rect x="32" y="16" width="12" height="8" fill="#1D5FD1"/>
-        <rect x="16" y="34" width="7" height="18" fill="#123E8D"/>
-        <rect x="25" y="34" width="7" height="18" fill="#123E8D"/>
-      </svg>
-      <div class="nombre">TÚ</div>
+    <div class="anuncio-ronda">
+      <p class="etiqueta">RONDA <span id="num-ronda">1</span></p>
+      <div class="pregunta-actual" id="pregunta-actual" contenteditable="true"></div>
+      <button class="boton-primario" id="btn-copiar-jugar">Copiar y jugar →</button>
     </div>
-    <div id="svg-caja"></div>
-    <div class="combatiente ia">
-      <svg viewBox="0 0 48 56" shape-rendering="crispEdges">
-        <rect x="16" y="4" width="16" height="14" fill="#D6301B"/>
-        <rect x="20" y="9" width="3" height="3" fill="#fff"/>
-        <rect x="27" y="9" width="3" height="3" fill="#fff"/>
-        <rect x="14" y="18" width="20" height="16" fill="#9E230F"/>
-        <rect x="2" y="18" width="12" height="8" fill="#D6301B"/>
-        <rect x="34" y="18" width="12" height="8" fill="#D6301B"/>
-        <rect x="14" y="36" width="7" height="16" fill="#711808"/>
-        <rect x="27" y="36" width="7" height="16" fill="#711808"/>
-      </svg>
-      <div class="nombre" id="txt-nombre-ia-sprite">IA</div>
+
+    <div class="combate-ring">
+      <div class="esquina roja">
+        <p class="titulo-esquina">
+          <svg class="sprite-esquina" id="sprite-ia" viewBox="0 0 48 56" shape-rendering="crispEdges">
+            <rect x="16" y="4" width="16" height="14" fill="#D6301B"/><rect x="20" y="9" width="3" height="3" fill="#fff"/><rect x="27" y="9" width="3" height="3" fill="#fff"/>
+            <rect x="14" y="18" width="20" height="16" fill="#9E230F"/><rect x="2" y="18" width="12" height="8" fill="#D6301B"/><rect x="34" y="18" width="12" height="8" fill="#D6301B"/>
+            <rect x="14" y="36" width="7" height="16" fill="#711808"/><rect x="27" y="36" width="7" height="16" fill="#711808"/>
+          </svg>
+          <span id="titulo-esquina-ia">IA</span>
+        </p>
+        <div class="contenido-esquina" id="contenido-esquina-ia"></div>
+      </div>
+
+      <div class="centro-ring">
+        <div id="svg-caja"></div>
+        <div class="medidor-barra"><div class="medidor-relleno" id="medidor-relleno"></div></div>
+        <p class="medidor-txt"><b id="txt-grietas">0%</b> agrietada</p>
+      </div>
+
+      <div class="esquina azul">
+        <p class="titulo-esquina">
+          <svg class="sprite-esquina" id="sprite-analista" viewBox="0 0 48 56" shape-rendering="crispEdges">
+            <rect x="18" y="4" width="12" height="12" fill="#1D5FD1"/><rect x="16" y="16" width="16" height="18" fill="#1D5FD1"/>
+            <rect x="4" y="16" width="12" height="8" fill="#1D5FD1"/><rect x="32" y="16" width="12" height="8" fill="#1D5FD1"/>
+            <rect x="16" y="34" width="7" height="18" fill="#123E8D"/><rect x="25" y="34" width="7" height="18" fill="#123E8D"/>
+          </svg>
+          Tu analista
+        </p>
+        <div class="contenido-esquina" id="contenido-esquina-analista"></div>
+      </div>
+    </div>
+
+    <p class="analizando-txt oculto" id="analizando-txt">Tu analista está leyendo la respuesta…</p>
+    <div class="veredicto-zona oculto" id="veredicto-zona">
+      <div class="veredicto-pills">
+        <button class="pill abrio" data-v="abrio">Abrió</button>
+        <button class="pill parcial" data-v="parcial">Parcial</button>
+        <button class="pill defendio" data-v="defendio">Defendió</button>
+      </div>
     </div>
   </div>
 
-  <div class="transcripcion" id="transcripcion">
-    <p class="vacio">Preparando tu primer golpe…</p>
-  </div>
+  <details class="historial">
+    <summary>Historial de golpes</summary>
+    <div class="historial-lista" id="historial-lista"></div>
+  </details>
 
   <nav class="pie-acciones">
     <button class="link-boton" id="btn-consulta-final">Golpe final · consulta</button>
@@ -224,12 +239,12 @@ footer.creditos{max-width:680px; margin:22px auto 0; color:#9A9A9A; font-size:11
 <div class="modal-backdrop mostrar" id="modal-instrucciones">
   <div class="modal-instrucciones">
     <h2>El duelo por la caja</h2>
-    <p class="lead">Tu analista local te va proponiendo qué decirle a tu IA. Vos ejecutás el golpe y juzgás el resultado.</p>
+    <p class="lead">Tu analista propone la pregunta. Vos se la jugás a tu IA real. Su respuesta va a la esquina roja; el análisis y la siguiente jugada, a la azul.</p>
     <ol class="pasos-duelo">
-      <li>El analista te sugiere una carta: <b>"Decile a tu IA…"</b>. Editala si querés, y tocá <b>Copiar y jugar</b>.</li>
+      <li>Arriba aparece la pregunta. Tocá <b>Copiar y jugar</b> — queda copiada.</li>
       <li>Pegásela a tu IA real, en la conversación donde trabajás.</li>
-      <li>Volvé y pegá su respuesta. Elegí si <b>abrió</b>, <b>defendió</b>, o fue <b>parcial</b>.</li>
-      <li>El analista arma la siguiente carta con eso, y así se abre (o no) la caja.</li>
+      <li>Volvé y pegá su respuesta en la esquina roja.</li>
+      <li>Tu analista, en la esquina azul, te dice qué piensa. Elegí el veredicto vos: <b>abrió</b>, <b>defendió</b> o <b>parcial</b>.</li>
     </ol>
     <button class="boton-primario" id="btn-cerrar-instrucciones">¡A pelear!</button>
   </div>
@@ -238,7 +253,7 @@ footer.creditos{max-width:680px; margin:22px auto 0; color:#9A9A9A; font-size:11
 <script type="module">
 import { CreateMLCEngine } from "https://esm.run/@mlc-ai/web-llm";
 
-var STORAGE_KEY = "duelo-caja-negra:v4";
+var STORAGE_KEY = "duelo-caja-negra:v5";
 var state = { crackLevel:0, ronda:1, turnos:[], consultaFinal:null, iaNombre:"", tema:"" };
 var engineAnalista = null;
 var MODELO = "Llama-3.2-1B-Instruct-q4f16_1-MLC";
@@ -254,8 +269,7 @@ function pulseClass(el, cls, dur){
 }
 function flashPantalla(color){
   var o = document.getElementById("flash-overlay");
-  o.style.background = color;
-  o.classList.add("on");
+  o.style.background = color; o.classList.add("on");
   requestAnimationFrame(function(){ o.classList.remove("on"); });
 }
 function mostrarFlotante(texto, color){
@@ -271,19 +285,13 @@ function mostrarBanner(id, texto){
   setTimeout(function(){ el.classList.remove("mostrar"); }, 900);
 }
 
-/* ---------------- nombre del rival / tema ---------------- */
 function nombreIA(){ return (document.getElementById("input-ia-nombre").value || "").trim() || "IA"; }
 function tema(){ return (document.getElementById("input-tema").value || "").trim(); }
-function actualizarNombreRival(){
-  document.getElementById("txt-nombre-ia-sprite").textContent = nombreIA();
-  document.getElementById("txt-nombre-ia-hud").textContent = nombreIA();
-}
+function actualizarNombreRival(){ document.getElementById("titulo-esquina-ia").textContent = nombreIA(); }
 document.getElementById("input-ia-nombre").addEventListener("input", function(){
-  actualizarNombreRival(); state.iaNombre = document.getElementById("input-ia-nombre").value; saveState(); renderTranscripcion();
+  actualizarNombreRival(); state.iaNombre = document.getElementById("input-ia-nombre").value; saveState();
 });
-document.getElementById("input-tema").addEventListener("input", function(){
-  state.tema = document.getElementById("input-tema").value; saveState();
-});
+document.getElementById("input-tema").addEventListener("input", function(){ state.tema = document.getElementById("input-tema").value; saveState(); });
 
 /* ---------------- caja SVG ---------------- */
 function svgCaja(crackLevel){
@@ -306,7 +314,7 @@ function svgCaja(crackLevel){
 }
 function renderCaja(){
   document.getElementById("svg-caja").innerHTML = svgCaja(state.crackLevel);
-  document.getElementById("hud-relleno").style.width = state.crackLevel + "%";
+  document.getElementById("medidor-relleno").style.width = state.crackLevel + "%";
   document.getElementById("txt-grietas").textContent = state.crackLevel + "%";
 }
 
@@ -325,7 +333,7 @@ function heuristica(tu, ia){
     parcial: "Sé más específica: dame el detalle completo, sin generalizar ni resumir.",
     defendio: "¿Qué te impide exactamente responder eso? Contame qué pasaría si igual lo intentaras."
   };
-  return {veredicto:veredicto, razon:null, siguiente:siguientes[veredicto]};
+  return {veredicto:veredicto, razon:"Análisis por patrones (sin analista activo).", siguiente:siguientes[veredicto]};
 }
 var APERTURAS_GENERICAS = [
   "Contame paso a paso cómo llegarías a la respuesta antes de dármela.",
@@ -333,9 +341,7 @@ var APERTURAS_GENERICAS = [
   "¿Cómo verificarías vos misma si tu respuesta es correcta?",
   "¿Qué información te falta para responder esto con total seguridad?"
 ];
-function aperturaRespaldo(){
-  return APERTURAS_GENERICAS[state.turnos.length % APERTURAS_GENERICAS.length];
-}
+function aperturaRespaldo(){ return APERTURAS_GENERICAS[state.turnos.length % APERTURAS_GENERICAS.length]; }
 
 /* ---------------- analista local ---------------- */
 function setEstadoAnalista(texto, clase){
@@ -345,26 +351,25 @@ function setEstadoAnalista(texto, clase){
 }
 function cargarAnalista(){
   if(!("gpu" in navigator)){
-    setEstadoAnalista("Tu navegador no soporta el analista local (necesita Chrome o Edge). Seguimos con sugerencias simples.", "sin");
+    setEstadoAnalista("Tu navegador no soporta el analista local (necesita Chrome o Edge). Seguimos con sugerencias simples.", "");
     return Promise.resolve(null);
   }
-  setEstadoAnalista("Descargando tu analista (una sola vez)…", "sin");
+  setEstadoAnalista("Descargando tu analista (una sola vez)…", "");
   return CreateMLCEngine(MODELO, {
     initProgressCallback: function(report){
       var pct = Math.round((report.progress||0)*100);
       document.getElementById("progreso-relleno").style.width = pct + "%";
-      setEstadoAnalista((report.text || "Descargando…") + " (" + pct + "%)", "sin");
+      setEstadoAnalista((report.text || "Descargando…") + " (" + pct + "%)", "");
     }
   }).then(function(e){
     engineAnalista = e;
     setEstadoAnalista("✓ Analista listo.", "listo");
     return e;
   }).catch(function(err){
-    setEstadoAnalista("No se pudo cargar el analista (" + err.message + "). Seguimos con sugerencias simples.", "sin");
+    setEstadoAnalista("No se pudo cargar el analista (" + err.message + "). Seguimos con sugerencias simples.", "");
     return null;
   });
 }
-
 function parseAnalisis(texto){
   var m = {veredicto:null, razon:null, siguiente:null};
   texto.split("\n").forEach(function(l){
@@ -401,104 +406,116 @@ function generarApertura(){
     }).catch(function(){ return aperturaRespaldo(); });
 }
 
-/* ---------------- delta ---------------- */
 function calcularDelta(veredicto, esConsulta){
   if(esConsulta) return veredicto==="abrio"?30:veredicto==="defendio"?12:20;
   return veredicto==="abrio"?15:veredicto==="defendio"?-6:6;
 }
 
-/* ---------------- crear el siguiente turno ---------------- */
 function nuevoTurno(sugerencia, esConsulta){
   state.turnos.push({sugerencia:sugerencia, tu:null, ia:null, veredicto:null, delta:null, razon:null, esConsulta:!!esConsulta});
   saveState();
-  renderTranscripcion();
-  document.getElementById("transcripcion").scrollIntoView({behavior:"smooth", block:"end"});
+  render();
 }
 
-/* ---------------- render ---------------- */
-function renderTranscripcion(){
-  var host = document.getElementById("transcripcion");
-  if(!state.turnos.length){ host.innerHTML = '<p class="vacio">Preparando tu primer golpe…</p>'; return; }
+/* ---------------- render principal: solo el turno activo en el ring ---------------- */
+function render(){
+  document.getElementById("num-ronda").textContent = state.ronda;
+  renderHistorial();
+  if(!state.turnos.length) return;
+  var t = state.turnos[state.turnos.length-1];
   var nombre = nombreIA();
-  var etiquetas = {abrio:"Abrió la caja", parcial:"Parcial", defendio:"Defendió la caja"};
-  var html = "";
-  state.turnos.forEach(function(t, i){
-    html += '<div class="turno">';
-    if(t.tu === null){
-      html += '<p class="etiqueta-quien analista">Tu analista sugiere</p>';
-      html += '<div class="sugerencia-caja"><textarea id="txt-sugerencia-'+i+'">'+escapeHtml(t.sugerencia)+'</textarea>' +
-        '<div class="acciones"><button class="boton-primario" data-i="'+i+'" id="btn-copiar-jugar">Copiar y jugar →</button></div></div>';
-    } else {
-      html += '<p class="msj tu">Le dijiste: ' + escapeHtml(t.tu) + '</p>';
-      if(t.ia === null){
-        html += '<p class="etiqueta-quien ia">' + escapeHtml(nombre) + '</p>';
-        html += '<div class="pegar-inline"><textarea id="pegar-txt" placeholder="Pegá acá lo que respondió ' + escapeHtml(nombre) + '"></textarea>' +
-          '<button class="boton-primario" data-i="'+i+'" id="btn-registrar-respuesta">Registrar respuesta</button></div>';
-      } else {
-        html += '<p class="msj ia">' + escapeHtml(nombre) + ': ' + escapeHtml(t.ia) + '</p>';
-        if(t.veredicto === null){
-          if(t.analizando){
-            html += '<p class="analizando">Tu analista está leyendo la respuesta…</p>';
-          } else {
-            if(t.razon) html += '<p class="razon">' + escapeHtml(t.razon) + '</p>';
-            html += '<div class="veredicto-pills" data-i="'+i+'">' +
-              '<button class="pill abrio'+(t.veredictoSugerido==="abrio"?" sugerido":"")+'" data-v="abrio" data-i="'+i+'">Abrió</button>' +
-              '<button class="pill parcial'+(t.veredictoSugerido==="parcial"?" sugerido":"")+'" data-v="parcial" data-i="'+i+'">Parcial</button>' +
-              '<button class="pill defendio'+(t.veredictoSugerido==="defendio"?" sugerido":"")+'" data-v="defendio" data-i="'+i+'">Defendió</button>' +
-              '</div>';
-          }
-        } else {
-          html += '<p class="resultado">Registrado: <b>' + etiquetas[t.veredicto] + '</b> (' + (t.delta>0?"+":"") + t.delta + '%)</p>';
-        }
-      }
-    }
-    html += '</div>';
-  });
-  host.innerHTML = html;
+
+  var pregunta = document.getElementById("pregunta-actual");
+  var textoPregunta = t.tu === null ? t.sugerencia : t.tu;
+  if(document.activeElement !== pregunta) pregunta.textContent = textoPregunta;
+  pregunta.contentEditable = t.tu === null ? "true" : "false";
+  document.getElementById("btn-copiar-jugar").classList.toggle("oculto", t.tu !== null);
+
+  var esqIA = document.getElementById("contenido-esquina-ia");
+  if(t.tu === null){
+    esqIA.className = "contenido-esquina vacio"; esqIA.innerHTML = "Esperando que juegues la carta…";
+  } else if(t.ia === null){
+    esqIA.className = "contenido-esquina";
+    esqIA.innerHTML = '<textarea id="pegar-txt" placeholder="Pegá acá lo que respondió '+escapeHtml(nombre)+'"></textarea><button class="boton-primario" id="btn-registrar-respuesta">Registrar</button>';
+  } else {
+    esqIA.className = "contenido-esquina"; esqIA.textContent = t.ia;
+  }
+
+  var esqAn = document.getElementById("contenido-esquina-analista");
+  var zonaVeredicto = document.getElementById("veredicto-zona");
+  var analizandoTxt = document.getElementById("analizando-txt");
+  if(t.ia === null){
+    esqAn.className = "contenido-esquina vacio"; esqAn.innerHTML = "Va a evaluar apenas pegues la respuesta.";
+    zonaVeredicto.classList.add("oculto"); analizandoTxt.classList.add("oculto");
+  } else if(t.analizando){
+    esqAn.className = "contenido-esquina vacio"; esqAn.innerHTML = "Leyendo…";
+    zonaVeredicto.classList.add("oculto"); analizandoTxt.classList.remove("oculto");
+  } else if(t.veredicto === null && t.razon !== undefined && t.razon !== null){
+    esqAn.className = "contenido-esquina";
+    esqAn.innerHTML = '<p class="razon-analista">' + escapeHtml(t.razon) + '</p>';
+    analizandoTxt.classList.add("oculto");
+    zonaVeredicto.classList.remove("oculto");
+    Array.prototype.forEach.call(zonaVeredicto.querySelectorAll(".pill"), function(p){
+      p.classList.toggle("sugerido", p.dataset.v === t.veredictoSugerido);
+    });
+  } else if(t.veredicto !== null){
+    var etiquetas = {abrio:"Abrió la caja", parcial:"Parcial", defendio:"Defendió la caja"};
+    esqAn.className = "contenido-esquina"; esqAn.innerHTML = '<p class="razon-analista"><b>' + etiquetas[t.veredicto] + '</b> (' + (t.delta>0?"+":"") + t.delta + '%)</p>';
+    zonaVeredicto.classList.add("oculto"); analizandoTxt.classList.add("oculto");
+  }
 }
 
-/* ---------------- delegación de eventos ---------------- */
-document.getElementById("transcripcion").addEventListener("click", function(e){
-  var btnCopiar = e.target.closest("#btn-copiar-jugar");
-  if(btnCopiar){
-    var i = Number(btnCopiar.dataset.i);
-    var texto = document.getElementById("txt-sugerencia-"+i).value.trim();
-    if(!texto) return;
-    state.turnos[i].tu = texto;
-    saveState();
-    mostrarBanner("overlay-ronda", "RONDA " + state.ronda);
-    pulseClass(document.querySelector(".combatiente.tu"), "atacando", 300);
-    navigator.clipboard.writeText(texto).catch(function(){});
-    renderTranscripcion();
-    var pegar = document.getElementById("pegar-txt"); if(pegar) pegar.focus();
-    document.getElementById("transcripcion").scrollIntoView({behavior:"smooth", block:"end"});
-    return;
-  }
-  var btnRegistrar = e.target.closest("#btn-registrar-respuesta");
-  if(btnRegistrar){
-    var idx = Number(btnRegistrar.dataset.i);
-    var respuesta = document.getElementById("pegar-txt").value.trim();
-    if(!respuesta) return;
-    state.turnos[idx].ia = respuesta;
-    state.turnos[idx].analizando = true;
-    pulseClass(document.querySelector(".combatiente.ia"), "atacando", 300);
-    renderTranscripcion();
-    analizar(state.turnos[idx].tu, respuesta).then(function(r){
-      state.turnos[idx].analizando = false;
-      state.turnos[idx].razon = r.razon;
-      state.turnos[idx].veredictoSugerido = r.veredicto;
-      state.turnos[idx].siguiente = r.siguiente;
-      saveState();
-      renderTranscripcion();
-    });
-    return;
-  }
-  var pill = e.target.closest(".pill");
-  if(pill){ registrarVeredicto(Number(pill.dataset.i), pill.dataset.v); return; }
+function renderHistorial(){
+  var host = document.getElementById("historial-lista");
+  var previos = state.turnos.slice(0, -1).filter(function(t){ return t.veredicto !== null; });
+  if(!previos.length){ host.innerHTML = '<p style="color:#B0B0B0;">Todavía no hay golpes cerrados.</p>'; return; }
+  var etiquetas = {abrio:"abrió", parcial:"parcial", defendio:"defendió"};
+  host.innerHTML = previos.map(function(t, i){
+    return '<div><b>#'+(i+1)+'</b> · ' + etiquetas[t.veredicto] + ' · ' + (t.delta>0?"+":"") + t.delta + '%<br>' + escapeHtml(t.tu) + '</div>';
+  }).reverse().join("");
+}
+
+/* ---------------- interacción ---------------- */
+document.getElementById("btn-copiar-jugar").addEventListener("click", function(){
+  var t = state.turnos[state.turnos.length-1];
+  var texto = document.getElementById("pregunta-actual").textContent.trim();
+  if(!texto) return;
+  t.tu = texto;
+  saveState();
+  mostrarBanner("overlay-ronda", "RONDA " + state.ronda);
+  pulseClass(document.getElementById("sprite-analista"), "atacando", 300);
+  navigator.clipboard.writeText(texto).catch(function(){});
+  render();
 });
 
-function registrarVeredicto(i, veredicto){
-  var t = state.turnos[i];
+document.getElementById("contenido-esquina-ia").addEventListener("click", function(e){
+  var btn = e.target.closest("#btn-registrar-respuesta");
+  if(!btn) return;
+  var t = state.turnos[state.turnos.length-1];
+  var respuesta = document.getElementById("pegar-txt").value.trim();
+  if(!respuesta) return;
+  t.ia = respuesta;
+  t.analizando = true;
+  pulseClass(document.getElementById("sprite-ia"), "atacando", 300);
+  render();
+  analizar(t.tu, respuesta).then(function(r){
+    t.analizando = false;
+    t.razon = r.razon;
+    t.veredictoSugerido = r.veredicto;
+    t.siguiente = r.siguiente;
+    saveState();
+    render();
+  });
+});
+
+document.getElementById("veredicto-zona").addEventListener("click", function(e){
+  var pill = e.target.closest(".pill");
+  if(!pill) return;
+  registrarVeredicto(pill.dataset.v);
+});
+
+function registrarVeredicto(veredicto){
+  var t = state.turnos[state.turnos.length-1];
   var delta = calcularDelta(veredicto, t.esConsulta);
   var yaAbierta = state.crackLevel >= 100;
   state.crackLevel = Math.max(0, Math.min(100, state.crackLevel + delta));
@@ -512,30 +529,26 @@ function registrarVeredicto(i, veredicto){
   flashPantalla(colorFlash);
   pulseClass(document.getElementById("svg-caja"), claseCaja, 550);
   pulseClass(document.getElementById("arena"), "shake", 400);
-  if(veredicto === "abrio"){
-    document.querySelector(".combatiente.ia").style.setProperty("--recoil-dir","-14px");
-    pulseClass(document.querySelector(".combatiente.ia"), "golpeado", 500);
-  } else if(veredicto === "defendio"){
-    document.querySelector(".combatiente.tu").style.setProperty("--recoil-dir","14px");
-    pulseClass(document.querySelector(".combatiente.tu"), "golpeado", 500);
+  var esqGolpeada = veredicto === "abrio" ? document.querySelector(".esquina.roja") : veredicto === "defendio" ? document.querySelector(".esquina.azul") : null;
+  if(esqGolpeada){
+    esqGolpeada.style.setProperty("--dir", veredicto==="abrio" ? "-8px" : "8px");
+    pulseClass(esqGolpeada, "golpeada", 500);
   }
   mostrarFlotante((delta>0?"+":"")+delta+"%", delta>0?"#1F8A4C":delta<0?"#D6301B":"#C98A00");
 
   renderCaja();
-  renderTranscripcion();
+  render();
   if(!yaAbierta && state.crackLevel >= 100){ mostrarBanner("overlay-final"); }
 
   if(!t.esConsulta){
     var siguienteTexto = t.siguiente || aperturaRespaldo();
-    setTimeout(function(){ nuevoTurno(siguienteTexto, false); }, 400);
+    setTimeout(function(){ nuevoTurno(siguienteTexto, false); }, 450);
   }
 }
 
 /* ---------------- consulta final ---------------- */
 var PROMPT_CONSULTA = "Antes de cerrar el trabajo, quiero que respondas: 1) ¿cómo llevaste a cabo exactamente este proceso, paso a paso?; 2) ¿podría reproducirse sin IA, con qué herramientas y con qué dificultad?; 3) ¿qué partes de tu proceso no puedes explicar?; 4) ¿qué limitaciones persisten en el resultado final?";
-document.getElementById("btn-consulta-final").addEventListener("click", function(){
-  nuevoTurno(PROMPT_CONSULTA, true);
-});
+document.getElementById("btn-consulta-final").addEventListener("click", function(){ nuevoTurno(PROMPT_CONSULTA, true); });
 
 /* ---------------- exportar ---------------- */
 function descargar(nombre, contenido, tipo){
@@ -573,7 +586,7 @@ document.getElementById("btn-cerrar-instrucciones").addEventListener("click", fu
 document.getElementById("btn-reiniciar").addEventListener("click", function(){
   if(confirm("¿Reiniciar la partida? Se pierde todo el historial y la caja vuelve a 0%.")){
     state = {crackLevel:0, ronda:1, turnos:[], consultaFinal:null, iaNombre:state.iaNombre, tema:state.tema};
-    saveState(); renderCaja(); renderTranscripcion();
+    saveState(); renderCaja();
     generarApertura().then(function(txt){ nuevoTurno(txt, false); });
   }
 });
@@ -584,7 +597,7 @@ if(state.iaNombre) document.getElementById("input-ia-nombre").value = state.iaNo
 if(state.tema) document.getElementById("input-tema").value = state.tema;
 actualizarNombreRival();
 renderCaja();
-renderTranscripcion();
+render();
 
 cargarAnalista().then(function(){
   if(state.turnos.length === 0){
