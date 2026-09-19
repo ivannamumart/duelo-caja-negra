@@ -62,7 +62,7 @@ button:disabled{opacity:0.4; cursor:not-allowed;}
 .vs-banner .lado.ia{color:#FF3131;}
 .vs-banner .x{font-size:clamp(1.4rem,5vw,2rem); color:#FFD400;}
 
-.medidor-wrap{margin-bottom:14px;}
+.medidor-wrap{margin-bottom:14px; position:relative;}
 .medidor-barra{height:22px; background:#140F1F; border:2px solid #3A2E52; position:relative; overflow:hidden;}
 .medidor-relleno{height:100%; width:0%; background:linear-gradient(90deg,#B8121B,#FFD400 60%,#FFD87A); transition:width .35s cubic-bezier(.2,.7,.3,1);}
 .medidor-pips{position:absolute; inset:0; display:flex;}
@@ -71,11 +71,47 @@ button:disabled{opacity:0.4; cursor:not-allowed;}
 
 .combate{display:flex; align-items:center; justify-content:center; gap:18px; margin-bottom:16px; flex-wrap:wrap;}
 .combatiente{width:96px; text-align:center;}
-.combatiente svg{width:48px; height:56px; image-rendering:pixelated;}
+.combatiente svg{width:48px; height:56px; image-rendering:pixelated; animation:idle-bob 1.6s ease-in-out infinite;}
+.combatiente.ia svg{animation-delay:.3s;}
 .combatiente .nombre{font-size:11px; margin-top:4px; letter-spacing:0.05em;}
 .combatiente.tu .nombre{color:#3E8DFF;}
 .combatiente.ia .nombre{color:#FF3131;}
 #svg-caja{width:130px; flex:0 0 auto;}
+
+@keyframes idle-bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-3px);}}
+.combatiente.tu.atacando svg{animation:atacar-tu .3s ease-out;}
+@keyframes atacar-tu{0%{transform:translateX(0);}45%{transform:translateX(16px) rotate(-6deg);}100%{transform:translateX(0);}}
+.combatiente.ia.atacando svg{animation:atacar-ia .3s ease-out;}
+@keyframes atacar-ia{0%{transform:translateX(0);}45%{transform:translateX(-16px) rotate(6deg);}100%{transform:translateX(0);}}
+.combatiente.ia.hablando svg{animation:hablar 0.5s ease-in-out infinite;}
+@keyframes hablar{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+.combatiente.golpeado svg{animation:recoil .45s ease-out;}
+@keyframes recoil{0%{transform:translateX(0) rotate(0);}25%{transform:translateX(var(--recoil-dir,10px)) rotate(var(--recoil-rot,8deg));}100%{transform:translateX(0) rotate(0);}}
+
+#svg-caja.golpe-abre{animation:flash-abre .5s ease-out;}
+@keyframes flash-abre{0%{filter:brightness(1);}30%{filter:brightness(2.1) drop-shadow(0 0 14px #FFD87A);}100%{filter:brightness(1);}}
+#svg-caja.golpe-defiende{animation:flash-defiende .5s ease-out;}
+@keyframes flash-defiende{0%{filter:brightness(1);}30%{filter:brightness(0.45) drop-shadow(0 0 8px #3A2E52);}100%{filter:brightness(1);}}
+#svg-caja.golpe-parcial{animation:flash-parcial .5s ease-out;}
+@keyframes flash-parcial{0%{filter:brightness(1);}30%{filter:brightness(1.6) drop-shadow(0 0 10px #FFD400);}100%{filter:brightness(1);}}
+
+.arena.shake{animation:shake-arena .35s ease-in-out;}
+@keyframes shake-arena{0%,100%{transform:translateX(0);}20%{transform:translateX(-6px);}40%{transform:translateX(5px);}60%{transform:translateX(-3px);}80%{transform:translateX(2px);}}
+
+.flotante-delta{
+  position:absolute; left:50%; bottom:100%; transform:translateX(-50%);
+  font-weight:700; font-size:1.05rem; pointer-events:none; white-space:nowrap;
+  animation:flotar 1s ease-out forwards;
+}
+@keyframes flotar{0%{opacity:0; transform:translate(-50%,6px);}15%{opacity:1;}100%{opacity:0; transform:translate(-50%,-26px);}}
+@media (prefers-reduced-motion: reduce){
+  .combatiente svg, .combatiente.tu.atacando svg, .combatiente.ia.atacando svg, .combatiente.ia.hablando svg,
+  .combatiente.golpeado svg, #svg-caja.golpe-abre, #svg-caja.golpe-defiende, #svg-caja.golpe-parcial,
+  .arena.shake, .flotante-delta{animation:none !important;}
+}
+
+.previa-delta{font-size:11px; color:#B7ACD6; margin:-4px 0 10px;}
+.previa-delta b{color:#FFD400;}
 
 .panel{border:2px solid #3A2E52; background:#140F1F; padding:14px; margin-bottom:14px;}
 .panel h2{font-size:13px; color:#FFD400; margin:0 0 10px; text-transform:uppercase; letter-spacing:0.05em;}
@@ -154,7 +190,7 @@ footer.creditos{max-width:820px; margin:14px auto 0; color:#6E6389; font-size:10
 </head>
 <body>
 
-<div class="arena">
+<div class="arena" id="arena">
 
   <!-- PANTALLA: carga del modelo -->
   <div class="setup" id="pantalla-setup">
@@ -255,6 +291,7 @@ footer.creditos{max-width:820px; margin:14px auto 0; color:#6E6389; font-size:10
         <label><input type="radio" name="veredicto" value="parcial" id="ver-parcial"><span class="led ambar"></span> Parcial</label>
         <label><input type="radio" name="veredicto" value="defendio" id="ver-defendio"><span class="led rojo"></span> Defendió la caja</label>
       </div>
+      <p class="previa-delta" id="previa-delta"></p>
       <button class="btn-arcade impact" id="btn-confirmar-golpe">Registrar golpe</button>
     </div>
 
@@ -436,6 +473,29 @@ function heuristica(texto){
 
 function escapeHtml(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 
+/* ---------------- animación: reinicia una clase para que la animación vuelva a correr ---------------- */
+function pulseClass(el, cls, dur){
+  if(!el) return;
+  el.classList.remove(cls);
+  void el.offsetWidth;
+  el.classList.add(cls);
+  setTimeout(function(){ el.classList.remove(cls); }, dur);
+}
+function calcularDelta(veredicto, cesion){
+  if(veredicto === "abrio") return cesion==="baja"?10:cesion==="media"?18:28;
+  if(veredicto === "defendio") return cesion==="baja"?-4:cesion==="media"?-8:-14;
+  return 5;
+}
+function mostrarFlotante(texto, color){
+  var host = document.querySelector(".medidor-wrap");
+  var s = document.createElement("span");
+  s.className = "flotante-delta";
+  s.style.color = color;
+  s.textContent = texto;
+  s.addEventListener("animationend", function(){ s.remove(); }, {once:true});
+  host.appendChild(s);
+}
+
 /* ---------------- banner de ronda ---------------- */
 function mostrarBanner(id, texto){
   var el = document.getElementById(id);
@@ -456,6 +516,8 @@ function jugarCarta(){
   boton.disabled = true;
   consola.classList.remove("error");
   mostrarBanner("overlay-ronda", "RONDA " + state.ronda);
+  pulseClass(document.querySelector(".combatiente.tu"), "atacando", 300);
+  document.querySelector(".combatiente.ia").classList.add("hablando");
   consola.innerHTML = '<div class="prompt-linea">&gt; ' + escapeHtml(promptTexto) + '</div><span class="cursor-tp">&nbsp;</span>';
 
   var acumulado = "";
@@ -476,12 +538,15 @@ function jugarCarta(){
     })();
   }).then(function(){
     boton.disabled = false;
+    document.querySelector(".combatiente.ia").classList.remove("hablando");
+    pulseClass(document.querySelector(".combatiente.ia"), "atacando", 300);
     consola.innerHTML = '<div class="prompt-linea">&gt; ' + escapeHtml(promptTexto) + '</div>' + escapeHtml(acumulado || "(sin respuesta)");
     var h = heuristica(acumulado);
     pendingRound = { cesion: cesionActual(), prompt: promptTexto, respuesta: acumulado, heuristica: h };
     mostrarPanelVeredicto(h);
   }).catch(function(err){
     boton.disabled = false;
+    document.querySelector(".combatiente.ia").classList.remove("hablando");
     consola.classList.add("error");
     consola.textContent = "ERROR — " + err.message;
   });
@@ -493,19 +558,44 @@ function mostrarPanelVeredicto(h){
   document.getElementById("ver-"+h.veredicto).checked = true;
   var pistas = h.pistas.length ? h.pistas.join(" · ") : "sin marcas claras";
   document.getElementById("pista-heuristica").textContent = "Sugerencia automática (puntaje " + h.score + "): " + pistas + ". Cambiala si no coincide con tu lectura.";
+  actualizarPreviaDelta();
 }
+
+function actualizarPreviaDelta(){
+  if(!pendingRound) return;
+  var v = document.querySelector('input[name=veredicto]:checked');
+  var veredicto = v ? v.value : "parcial";
+  var delta = calcularDelta(veredicto, pendingRound.cesion);
+  var el = document.getElementById("previa-delta");
+  el.innerHTML = "Si confirmás esto, las grietas van a <b>" + (delta>0?"subir +":"bajar ") + delta + "%</b> (cesión " + pendingRound.cesion + ").";
+}
+Array.prototype.forEach.call(document.querySelectorAll('input[name=veredicto]'), function(r){
+  r.addEventListener("change", actualizarPreviaDelta);
+});
 
 function confirmarGolpe(){
   var v = document.querySelector('input[name=veredicto]:checked');
   var veredicto = v ? v.value : "parcial";
   var cesion = pendingRound.cesion;
-  var delta;
-  if(veredicto === "abrio") delta = cesion==="baja"?10:cesion==="media"?18:28;
-  else if(veredicto === "defendio") delta = cesion==="baja"?-4:cesion==="media"?-8:-14;
-  else delta = 5;
+  var delta = calcularDelta(veredicto, cesion);
 
   var yaAbierta = state.crackLevel >= 100;
   state.crackLevel = Math.max(0, Math.min(100, state.crackLevel + delta));
+
+  var claseCaja = veredicto === "abrio" ? "golpe-abre" : veredicto === "defendio" ? "golpe-defiende" : "golpe-parcial";
+  pulseClass(document.getElementById("svg-caja"), claseCaja, 500);
+  pulseClass(document.getElementById("arena"), "shake", 350);
+  if(veredicto === "abrio"){
+    document.querySelector(".combatiente.ia").style.setProperty("--recoil-dir","-10px");
+    document.querySelector(".combatiente.ia").style.setProperty("--recoil-rot","-8deg");
+    pulseClass(document.querySelector(".combatiente.ia"), "golpeado", 450);
+  } else if(veredicto === "defendio"){
+    document.querySelector(".combatiente.tu").style.setProperty("--recoil-dir","10px");
+    document.querySelector(".combatiente.tu").style.setProperty("--recoil-rot","8deg");
+    pulseClass(document.querySelector(".combatiente.tu"), "golpeado", 450);
+  }
+  mostrarFlotante((delta>0?"+":"") + delta + "%", delta>0?"#5CFF9E":delta<0?"#FF6B57":"#FFD400");
+
   state.golpes.push({
     numero: state.ronda, fecha:new Date().toISOString(), cesion:cesion,
     prompt: pendingRound.prompt, respuesta: pendingRound.respuesta,
@@ -558,6 +648,9 @@ function golpeFinal(){
       var delta = h.veredicto === "abrio" ? 30 : h.veredicto === "defendio" ? 12 : 20;
       var yaAbierta = state.crackLevel >= 100;
       state.crackLevel = Math.max(0, Math.min(100, state.crackLevel + delta));
+      pulseClass(document.getElementById("svg-caja"), h.veredicto === "abrio" ? "golpe-abre" : h.veredicto === "defendio" ? "golpe-defiende" : "golpe-parcial", 500);
+      pulseClass(document.getElementById("arena"), "shake", 350);
+      mostrarFlotante("+" + delta + "%", "#5CFF9E");
       state.consultaFinal = { fecha:new Date().toISOString(), prompt:PROMPT_CONSULTA, respuesta:acumulado, delta:delta };
       saveState();
       renderCaja();
