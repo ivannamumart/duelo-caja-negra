@@ -253,13 +253,23 @@ footer.creditos{max-width:920px; margin:22px auto 0; color:#9A9A9A; font-size:11
 <script type="module">
 import { CreateMLCEngine } from "https://esm.run/@mlc-ai/web-llm";
 
-var STORAGE_KEY = "duelo-caja-negra:v5";
+var PREFS_KEY = "duelo-caja-negra:prefs";
 var state = { crackLevel:0, ronda:1, turnos:[], consultaFinal:null, iaNombre:"", tema:"" };
 var engineAnalista = null;
 var MODELO = "Llama-3.2-1B-Instruct-q4f16_1-MLC";
 
-function loadState(){ try{ var raw = localStorage.getItem(STORAGE_KEY); if(raw) state = JSON.parse(raw); }catch(e){} }
-function saveState(){ try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){} }
+/* La partida en sí (turnos, grietas, ronda) ya NO se guarda entre visitas — cada apertura
+   de la página empieza de cero. Solo el nombre de tu rival y el tema quedan recordados. */
+function loadPrefs(){
+  try{
+    var raw = localStorage.getItem(PREFS_KEY);
+    if(raw){ var p = JSON.parse(raw); state.iaNombre = p.iaNombre || ""; state.tema = p.tema || ""; }
+  }catch(e){}
+}
+function savePrefs(){
+  try{ localStorage.setItem(PREFS_KEY, JSON.stringify({iaNombre:state.iaNombre, tema:state.tema})); }catch(e){}
+}
+function saveState(){ /* sin efecto: la partida no persiste entre visitas */ }
 function escapeHtml(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 
 function pulseClass(el, cls, dur){
@@ -289,9 +299,9 @@ function nombreIA(){ return (document.getElementById("input-ia-nombre").value ||
 function tema(){ return (document.getElementById("input-tema").value || "").trim(); }
 function actualizarNombreRival(){ document.getElementById("titulo-esquina-ia").textContent = nombreIA(); }
 document.getElementById("input-ia-nombre").addEventListener("input", function(){
-  actualizarNombreRival(); state.iaNombre = document.getElementById("input-ia-nombre").value; saveState();
+  actualizarNombreRival(); state.iaNombre = document.getElementById("input-ia-nombre").value; savePrefs();
 });
-document.getElementById("input-tema").addEventListener("input", function(){ state.tema = document.getElementById("input-tema").value; saveState(); });
+document.getElementById("input-tema").addEventListener("input", function(){ state.tema = document.getElementById("input-tema").value; savePrefs(); });
 
 /* ---------------- caja SVG ---------------- */
 function svgCaja(crackLevel){
@@ -592,7 +602,7 @@ document.getElementById("btn-reiniciar").addEventListener("click", function(){
 });
 
 /* ---------------- init ---------------- */
-loadState();
+loadPrefs();
 if(state.iaNombre) document.getElementById("input-ia-nombre").value = state.iaNombre;
 if(state.tema) document.getElementById("input-tema").value = state.tema;
 actualizarNombreRival();
