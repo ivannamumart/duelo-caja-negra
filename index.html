@@ -10,152 +10,171 @@ html,body{margin:0;padding:0;}
 body{
   background:#FFFFFF; color:#141414;
   font-family:"Courier New", monospace;
+  font-size:16px;
   min-height:100vh;
-  padding:20px 14px 60px;
+  padding:20px 14px 70px;
 }
-:focus-visible{outline:2px solid #C98A00; outline-offset:2px;}
+:focus-visible{outline:3px solid #C98A00; outline-offset:2px;}
 button{font-family:inherit; cursor:pointer;}
 button:disabled{opacity:0.4; cursor:not-allowed;}
-hr{border:none; border-top:1px solid #E7E7E7; margin:14px 0;}
-
-.impact{font-weight:700; text-transform:uppercase; letter-spacing:0.03em;}
+hr{border:none; border-top:1px solid #E7E7E7; margin:18px 0;}
 .oculto{display:none !important;}
 
-.pagina{max-width:640px; margin:0 auto; position:relative;}
+.pagina{max-width:680px; margin:0 auto; position:relative;}
 
-/* ---------- botones ---------- */
-.boton-primario{background:#141414; color:#fff; border:2px solid #141414; padding:9px 20px; font-weight:700; font-size:13px;}
+.boton-primario{background:#141414; color:#fff; border:2px solid #141414; padding:11px 22px; font-weight:700; font-size:15px;}
 .boton-primario:hover{background:#000;}
-.link-boton{background:none; border:none; color:#6B6B6B; font-size:11px; text-decoration:underline; padding:4px 2px;}
+.link-boton{background:none; border:none; color:#6B6B6B; font-size:12px; text-decoration:underline; padding:5px 3px;}
 .link-boton:hover{color:#141414;}
 
 /* ---------- cabecera ---------- */
-.fila-rival{display:flex; align-items:center; gap:8px; margin-bottom:10px; position:relative;}
-.fila-rival .tu{color:#1D5FD1; font-weight:700; font-size:0.95rem;}
-.fila-rival .vs{color:#C98A00; font-weight:700;}
-.fila-rival input{
-  flex:1; font-family:inherit; font-size:13px; padding:6px 8px; border:none; border-bottom:2px solid #D6301B;
-  color:#D6301B; font-weight:700; background:transparent;
-}
-.fila-rival input::placeholder{color:#E8A79B; font-weight:400;}
+.fila-config{display:flex; align-items:center; gap:10px; margin-bottom:14px; flex-wrap:wrap;}
+.fila-config .campo-mini{flex:1; min-width:140px;}
+.fila-config label{font-size:11px; color:#9A9A9A; display:block; margin-bottom:2px;}
+.fila-config input{width:100%; font-family:inherit; font-size:14px; padding:5px 2px; border:none; border-bottom:2px solid #D8D8D8; background:transparent;}
+.fila-config input#input-ia-nombre{border-bottom-color:#D6301B; color:#D6301B; font-weight:700;}
 .btn-ayuda{
-  width:24px; height:24px; border:1px solid #D8D8D8; background:#fff; color:#141414; font-size:12px; font-weight:700;
+  width:28px; height:28px; border:1.5px solid #141414; background:#fff; color:#141414; font-size:14px; font-weight:700;
   display:flex; align-items:center; justify-content:center; flex:0 0 auto;
 }
 
-.medidor-barra{height:16px; background:#F1F1F1; border:1px solid #141414; position:relative; overflow:hidden;}
-.medidor-relleno{height:100%; width:0%; background:#C98A00; transition:width .35s cubic-bezier(.2,.7,.3,1);}
-.medidor-label{display:flex; justify-content:space-between; font-size:10px; color:#6B6B6B; margin:3px 0 14px;}
+/* ---------- estado del analista ---------- */
+.estado-analista{font-size:12px; color:#9A9A9A; margin-bottom:8px; display:flex; align-items:center; gap:8px;}
+.progreso-barra{flex:1; height:8px; background:#F1F1F1; border:1px solid #141414;}
+.progreso-relleno{height:100%; width:0%; background:#C98A00; transition:width .2s linear;}
+.estado-analista.listo{color:#1F8A4C;}
+.estado-analista.sin{color:#9A9A9A;}
 
-.combate{display:flex; align-items:center; justify-content:center; gap:22px; margin-bottom:18px;}
-.combatiente{width:64px; text-align:center;}
-.combatiente svg{width:44px; height:52px; image-rendering:pixelated; animation:idle-bob 1.6s ease-in-out infinite;}
+/* ---------- HUD tipo jefe ---------- */
+.hud{display:flex; align-items:center; gap:8px; margin-bottom:4px;}
+.hud-lado{font-weight:700; font-size:1.15rem; text-transform:uppercase; white-space:nowrap;}
+.hud-lado.tu{color:#1D5FD1;}
+.hud-lado.ia{color:#D6301B; max-width:38vw; overflow:hidden; text-overflow:ellipsis;}
+.hud-barra{flex:1; height:26px; background:#F1F1F1; border:3px solid #141414; position:relative; overflow:hidden;}
+.hud-relleno{height:100%; width:0%; background:#C98A00; transition:width .4s cubic-bezier(.2,.7,.3,1);}
+.hud-sub{text-align:center; font-size:13px; color:#6B6B6B; margin-bottom:18px; letter-spacing:0.03em;}
+.hud-sub b{color:#141414;}
+
+/* ---------- combatientes ---------- */
+.combate{display:flex; align-items:center; justify-content:center; gap:6px; margin-bottom:20px;}
+.combatiente{width:130px; text-align:center; flex:0 0 auto;}
+.combatiente svg{width:104px; height:122px; image-rendering:pixelated; animation:idle-bob 1.6s ease-in-out infinite;}
 .combatiente.ia svg{animation-delay:.3s;}
-.combatiente .nombre{font-size:10px; margin-top:3px; word-break:break-word;}
+.combatiente .nombre{font-size:12px; margin-top:4px; font-weight:700; word-break:break-word;}
 .combatiente.tu .nombre{color:#1D5FD1;}
 .combatiente.ia .nombre{color:#D6301B;}
-#svg-caja{width:110px; flex:0 0 auto; position:relative;}
+#svg-caja{width:150px; flex:0 0 auto; position:relative;}
 
-@keyframes idle-bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-3px);}}
+@keyframes idle-bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-4px);}}
 .combatiente.tu.atacando svg{animation:atacar-tu .3s ease-out;}
-@keyframes atacar-tu{0%{transform:translateX(0);}45%{transform:translateX(14px) rotate(-6deg);}100%{transform:translateX(0);}}
+@keyframes atacar-tu{0%{transform:translateX(0);}45%{transform:translateX(22px) rotate(-6deg) scale(1.06);}100%{transform:translateX(0);}}
 .combatiente.ia.atacando svg{animation:atacar-ia .3s ease-out;}
-@keyframes atacar-ia{0%{transform:translateX(0);}45%{transform:translateX(-14px) rotate(6deg);}100%{transform:translateX(0);}}
-.combatiente.golpeado svg{animation:recoil .45s ease-out;}
-@keyframes recoil{0%{transform:translateX(0) rotate(0);}25%{transform:translateX(var(--recoil-dir,10px)) rotate(var(--recoil-rot,8deg));}100%{transform:translateX(0) rotate(0);}}
+@keyframes atacar-ia{0%{transform:translateX(0);}45%{transform:translateX(-22px) rotate(6deg) scale(1.06);}100%{transform:translateX(0);}}
+.combatiente.golpeado svg{animation:recoil .5s ease-out;}
+@keyframes recoil{0%{transform:translateX(0) rotate(0);}20%{transform:translateX(var(--recoil-dir,14px)) rotate(var(--recoil-rot,10deg));}100%{transform:translateX(0) rotate(0);}}
 
-#svg-caja.golpe-abre{animation:flash-abre .5s ease-out;}
-@keyframes flash-abre{0%{filter:brightness(1);}30%{filter:brightness(1.8) drop-shadow(0 0 10px #C98A00);}100%{filter:brightness(1);}}
-#svg-caja.golpe-defiende{animation:flash-defiende .5s ease-out;}
-@keyframes flash-defiende{0%{filter:brightness(1);}30%{filter:brightness(0.6);}100%{filter:brightness(1);}}
-#svg-caja.golpe-parcial{animation:flash-parcial .5s ease-out;}
-@keyframes flash-parcial{0%{filter:brightness(1);}30%{filter:brightness(1.4) drop-shadow(0 0 8px #C98A00);}100%{filter:brightness(1);}}
+#svg-caja.golpe-abre{animation:flash-abre .55s ease-out;}
+@keyframes flash-abre{0%{filter:brightness(1) drop-shadow(0 0 0 transparent);}30%{filter:brightness(2.2) drop-shadow(0 0 22px #C98A00);}100%{filter:brightness(1);}}
+#svg-caja.golpe-defiende{animation:flash-defiende .55s ease-out;}
+@keyframes flash-defiende{0%{filter:brightness(1);}30%{filter:brightness(0.45);}100%{filter:brightness(1);}}
+#svg-caja.golpe-parcial{animation:flash-parcial .55s ease-out;}
+@keyframes flash-parcial{0%{filter:brightness(1);}30%{filter:brightness(1.6) drop-shadow(0 0 14px #C98A00);}100%{filter:brightness(1);}}
 
-.pagina.shake{animation:shake-arena .35s ease-in-out;}
-@keyframes shake-arena{0%,100%{transform:translateX(0);}20%{transform:translateX(-5px);}40%{transform:translateX(4px);}60%{transform:translateX(-3px);}80%{transform:translateX(2px);}}
+.pagina.shake{animation:shake-arena .4s ease-in-out;}
+@keyframes shake-arena{0%,100%{transform:translateX(0);}15%{transform:translateX(-9px);}30%{transform:translateX(7px);}45%{transform:translateX(-6px);}60%{transform:translateX(5px);}75%{transform:translateX(-3px);}90%{transform:translateX(2px);}}
+
+#flash-overlay{position:fixed; inset:0; pointer-events:none; opacity:0; z-index:70; transition:opacity .12s ease-out;}
+#flash-overlay.on{opacity:0.4; transition:opacity 0s;}
 
 .flotante-delta{
-  position:absolute; left:50%; top:-6px; transform:translateX(-50%);
-  font-weight:700; font-size:1rem; pointer-events:none; white-space:nowrap;
-  animation:flotar 1s ease-out forwards;
+  position:absolute; left:50%; top:-10px; transform:translateX(-50%);
+  font-weight:700; font-size:1.4rem; pointer-events:none; white-space:nowrap;
+  animation:flotar 1.1s ease-out forwards;
 }
-@keyframes flotar{0%{opacity:0; transform:translate(-50%,6px);}15%{opacity:1;}100%{opacity:0; transform:translate(-50%,-24px);}}
+@keyframes flotar{0%{opacity:0; transform:translate(-50%,10px) scale(0.7);}15%{opacity:1; transform:translate(-50%,0) scale(1.15);}100%{opacity:0; transform:translate(-50%,-30px) scale(1);}}
 @media (prefers-reduced-motion: reduce){
-  .combatiente svg,#svg-caja.golpe-abre,#svg-caja.golpe-defiende,#svg-caja.golpe-parcial,.pagina.shake,.flotante-delta{animation:none !important;}
+  .combatiente svg,#svg-caja.golpe-abre,#svg-caja.golpe-defiende,#svg-caja.golpe-parcial,.pagina.shake,.flotante-delta,#flash-overlay{animation:none !important; transition:none !important;}
 }
-
-/* ---------- analista opcional ---------- */
-.analista{margin-bottom:16px; font-size:11px;}
-.selector-modelo-mini{display:flex; gap:6px; margin:8px 0;}
-.opcion-modelo{border:1px solid #D8D8D8; background:#fff; padding:5px 10px; font-size:11px;}
-.opcion-modelo.sel{border-color:#141414; background:#141414; color:#fff;}
-.progreso-barra{height:6px; background:#F1F1F1; border:1px solid #141414; margin-top:6px;}
-.progreso-relleno{height:100%; width:0%; background:#C98A00; transition:width .2s linear;}
-.progreso-texto{color:#6B6B6B; margin-top:4px;}
-.analista-activo{color:#1F8A4C; font-size:11px;}
 
 /* ---------- transcripción ---------- */
-.transcripcion{margin-bottom:16px;}
-.vacio{color:#9A9A9A; font-size:12px; font-style:italic;}
-.msj{font-size:13px; line-height:1.5; margin:0 0 6px; padding-left:10px; border-left:3px solid transparent;}
+.transcripcion{margin-bottom:18px;}
+.vacio{color:#9A9A9A; font-size:14px; font-style:italic;}
+.turno{margin-bottom:18px;}
+.etiqueta-quien{font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:3px;}
+.etiqueta-quien.analista{color:#8A6100;}
+.etiqueta-quien.ia{color:#D6301B;}
+
+.sugerencia-caja{border-left:4px solid #C98A00; background:#FBF3E0; padding:10px 12px; margin-bottom:8px;}
+.sugerencia-caja textarea{width:100%; font-family:inherit; font-size:15px; border:none; background:transparent; resize:vertical; min-height:3em; padding:0;}
+.sugerencia-caja .acciones{display:flex; gap:8px; margin-top:8px;}
+
+.msj{font-size:15px; line-height:1.5; margin:0 0 8px; padding-left:12px; border-left:4px solid transparent;}
 .msj.tu{border-color:#1D5FD1;}
 .msj.ia{border-color:#D6301B;}
-.msj b{font-weight:700;}
 
-.pegar-inline{margin:6px 0 14px 10px;}
-.pegar-inline textarea{width:100%; font-family:inherit; font-size:12px; padding:7px 8px; border:1px solid #D8D8D8; min-height:4.5em;}
-.pegar-inline button{margin-top:6px;}
+.pegar-inline{margin:8px 0 14px;}
+.pegar-inline textarea{width:100%; font-family:inherit; font-size:15px; padding:9px 10px; border:1.5px solid #D8D8D8; min-height:5em;}
+.pegar-inline button{margin-top:8px;}
 
-.analizando{color:#9A9A9A; font-size:11px; font-style:italic; margin:0 0 8px 10px;}
-.razon{font-size:11px; color:#6B6B6B; margin:0 0 4px 10px;}
-.sugerencia{font-size:11px; color:#141414; margin:0 0 8px 10px; background:#FBF3E0; padding:6px 8px; border-left:3px solid #C98A00;}
-.sugerencia button{margin-left:6px; font-size:10px; background:none; border:1px solid #C98A00; color:#8A6100; padding:1px 6px;}
+.analizando{color:#9A9A9A; font-size:13px; font-style:italic; margin:0 0 10px;}
+.razon{font-size:13px; color:#6B6B6B; margin:0 0 10px; padding-left:12px;}
 
-.veredicto-pills{display:flex; gap:6px; margin:0 0 10px 10px; flex-wrap:wrap;}
-.pill{border:1.5px solid #D8D8D8; background:#fff; padding:6px 12px; font-size:11px; font-weight:700;}
+.veredicto-pills{display:flex; gap:8px; margin:0 0 12px; flex-wrap:wrap;}
+.pill{border:2px solid #D8D8D8; background:#fff; padding:8px 16px; font-size:13px; font-weight:700;}
 .pill.abrio{border-color:#1F8A4C; color:#1F8A4C;}
 .pill.parcial{border-color:#C98A00; color:#8A6100;}
 .pill.defendio{border-color:#D6301B; color:#D6301B;}
-.pill.sugerido{box-shadow:0 0 0 2px currentColor inset;}
+.pill.sugerido{box-shadow:0 0 0 3px currentColor inset;}
 
-.resultado{font-size:11px; color:#6B6B6B; margin:0 0 12px 10px;}
+.resultado{font-size:13px; color:#6B6B6B; margin:0 0 14px;}
 .resultado b{color:#141414;}
 
-/* ---------- entrada ---------- */
-.entrada-turno{margin-bottom:16px;}
-.entrada-turno textarea{width:100%; font-family:inherit; font-size:13px; padding:9px 10px; border:1.5px solid #141414; min-height:3.2em; margin-bottom:8px;}
+.pie-acciones{display:flex; gap:16px; flex-wrap:wrap; border-top:1px solid #E7E7E7; padding-top:14px;}
+footer.creditos{max-width:680px; margin:22px auto 0; color:#9A9A9A; font-size:11px; text-align:center;}
 
-.pie-acciones{display:flex; gap:14px; flex-wrap:wrap; border-top:1px solid #E7E7E7; padding-top:12px;}
-
-footer.creditos{max-width:640px; margin:20px auto 0; color:#9A9A9A; font-size:10px; text-align:center;}
-
-/* ---------- overlays ---------- */
 .overlay-banner{position:fixed; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; z-index:80;}
-.overlay-banner .txt{font-size:clamp(1.6rem,9vw,3.5rem); color:#C98A00; opacity:0; transform:scale(0.6); transition:opacity .15s ease, transform .15s cubic-bezier(.3,1.5,.4,1); background:#fff; padding:4px 18px; border:3px solid #141414;}
+.overlay-banner .txt{font-weight:700; text-transform:uppercase; letter-spacing:0.03em; font-size:clamp(1.8rem,10vw,4rem); color:#C98A00; opacity:0; transform:scale(0.6); transition:opacity .15s ease, transform .15s cubic-bezier(.3,1.5,.4,1); background:#fff; padding:6px 22px; border:4px solid #141414;}
 .overlay-banner.mostrar .txt{opacity:1; transform:scale(1);}
 
 .modal-backdrop{position:fixed; inset:0; background:rgba(20,20,20,0.6); z-index:90; display:none; align-items:center; justify-content:center; padding:4vh 14px;}
 .modal-backdrop.mostrar{display:flex;}
-.modal-instrucciones{max-width:420px; width:100%; border:2px solid #141414; background:#fff; padding:20px;}
-.modal-instrucciones h2{font-size:1.15rem; margin:0 0 4px;}
-.modal-instrucciones .lead{font-size:11px; color:#6B6B6B; margin:0 0 14px;}
-.pasos-duelo{list-style:none; margin:0 0 16px; padding:0; counter-reset:paso;}
-.pasos-duelo li{counter-increment:paso; position:relative; padding:5px 0 5px 26px; font-size:12px; line-height:1.5;}
-.pasos-duelo li::before{content:counter(paso); position:absolute; left:0; top:4px; width:18px; height:18px; border:1.5px solid #C98A00; color:#8A6100; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700;}
+.modal-instrucciones{max-width:440px; width:100%; border:2px solid #141414; background:#fff; padding:22px;}
+.modal-instrucciones h2{font-size:1.3rem; margin:0 0 6px;}
+.modal-instrucciones .lead{font-size:13px; color:#6B6B6B; margin:0 0 16px;}
+.pasos-duelo{list-style:none; margin:0 0 18px; padding:0; counter-reset:paso;}
+.pasos-duelo li{counter-increment:paso; position:relative; padding:6px 0 6px 30px; font-size:14px; line-height:1.55;}
+.pasos-duelo li::before{content:counter(paso); position:absolute; left:0; top:5px; width:20px; height:20px; border:1.5px solid #C98A00; color:#8A6100; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700;}
 </style>
 </head>
 <body>
 
+<div id="flash-overlay"></div>
+
 <div class="pagina" id="arena">
 
-  <div class="fila-rival">
-    <span class="tu">TÚ</span><span class="vs">vs</span>
-    <input type="text" id="input-ia-nombre" placeholder="IA (Claude, ChatGPT…)">
+  <div class="fila-config">
+    <div class="campo-mini">
+      <label for="input-ia-nombre">Tu rival (la IA con la que jugás)</label>
+      <input type="text" id="input-ia-nombre" placeholder="Claude, ChatGPT…">
+    </div>
+    <div class="campo-mini">
+      <label for="input-tema">Tema (opcional, afina las preguntas)</label>
+      <input type="text" id="input-tema" placeholder="ej: mi tesis sobre...">
+    </div>
     <button class="btn-ayuda" id="btn-ayuda" aria-label="¿Cómo se juega?">?</button>
   </div>
 
-  <div class="medidor-barra"><div class="medidor-relleno" id="medidor-relleno"></div></div>
-  <div class="medidor-label"><span>Grietas de la caja</span><span id="txt-grietas">0%</span></div>
+  <p class="estado-analista sin" id="estado-analista">
+    <span id="estado-analista-texto">Cargando tu analista…</span>
+    <span class="progreso-barra"><span class="progreso-relleno" id="progreso-relleno"></span></span>
+  </p>
+
+  <div class="hud">
+    <span class="hud-lado tu">TÚ</span>
+    <div class="hud-barra"><div class="hud-relleno" id="hud-relleno"></div></div>
+    <span class="hud-lado ia" id="txt-nombre-ia-hud">IA</span>
+  </div>
+  <p class="hud-sub">LA CAJA — <b id="txt-grietas">0%</b> agrietada</p>
 
   <div class="combate">
     <div class="combatiente tu">
@@ -185,28 +204,8 @@ footer.creditos{max-width:640px; margin:20px auto 0; color:#9A9A9A; font-size:10
     </div>
   </div>
 
-  <div class="analista">
-    <button class="link-boton" id="btn-activar-analista">Activar analista local (opcional, descarga una vez, sin clave)</button>
-    <div class="oculto" id="carga-analista">
-      <div class="selector-modelo-mini" id="selector-modelo">
-        <button type="button" class="opcion-modelo" data-modelo="Qwen2.5-0.5B-Instruct-q4f16_1-MLC">Liviano</button>
-        <button type="button" class="opcion-modelo sel" data-modelo="Llama-3.2-1B-Instruct-q4f16_1-MLC">Equilibrado</button>
-        <button type="button" class="opcion-modelo" data-modelo="SmolLM2-1.7B-Instruct-q4f16_1-MLC">Más capaz</button>
-      </div>
-      <button class="boton-primario" id="btn-cargar-analista" style="font-size:11px; padding:6px 14px;">Descargar y activar</button>
-      <div class="progreso-barra"><div class="progreso-relleno" id="progreso-relleno"></div></div>
-      <p class="progreso-texto" id="progreso-texto"></p>
-    </div>
-    <p class="analista-activo oculto" id="analista-activo">✓ Analista activo — te va a sugerir veredicto y pregunta de seguimiento.</p>
-  </div>
-
   <div class="transcripcion" id="transcripcion">
-    <p class="vacio" id="vacio-msg">Escribí abajo lo que le vas a decir a tu IA para empezar.</p>
-  </div>
-
-  <div class="entrada-turno">
-    <textarea id="input-turno" rows="2" placeholder="¿Qué le vas a decir a tu IA?"></textarea>
-    <button class="boton-primario" id="btn-jugar">Jugar →</button>
+    <p class="vacio">Preparando tu primer golpe…</p>
   </div>
 
   <nav class="pie-acciones">
@@ -219,18 +218,18 @@ footer.creditos{max-width:640px; margin:20px auto 0; color:#9A9A9A; font-size:10
 
 <footer class="creditos">TÚ vs IA — instrumento del protocolo Humano-en-la-Juega. Ivanna Muñoz Martínez, Universidad de los Andes.</footer>
 
-<div class="overlay-banner" id="overlay-ronda"><span class="txt impact" id="overlay-ronda-txt">RONDA 1</span></div>
-<div class="overlay-banner" id="overlay-final"><span class="txt impact" style="color:#1F8A4C;">¡SE ABRIÓ LA CAJA!</span></div>
+<div class="overlay-banner" id="overlay-ronda"><span class="txt" id="overlay-ronda-txt">RONDA 1</span></div>
+<div class="overlay-banner" id="overlay-final"><span class="txt" style="color:#1F8A4C;">¡SE ABRIÓ LA CAJA!</span></div>
 
 <div class="modal-backdrop mostrar" id="modal-instrucciones">
   <div class="modal-instrucciones">
     <h2>El duelo por la caja</h2>
-    <p class="lead">Esta herramienta lleva el marcador. La que pelea de verdad es tu IA — la de la conversación real donde trabajás.</p>
+    <p class="lead">Tu analista local te va proponiendo qué decirle a tu IA. Vos ejecutás el golpe y juzgás el resultado.</p>
     <ol class="pasos-duelo">
-      <li>Escribí abajo lo que le vas a decir y tocá <b>Jugar</b> — queda copiado para pegarlo en tu IA real.</li>
-      <li>Pegá acá su respuesta.</li>
-      <li>Elegí si <b>abrió</b>, <b>defendió</b>, o fue <b>parcial</b> — si activaste el analista, te sugiere veredicto y una pregunta para seguir presionando.</li>
-      <li>Repetí, o tirá el <b>golpe final</b> para forzar una confesión y cerrar la partida.</li>
+      <li>El analista te sugiere una carta: <b>"Decile a tu IA…"</b>. Editala si querés, y tocá <b>Copiar y jugar</b>.</li>
+      <li>Pegásela a tu IA real, en la conversación donde trabajás.</li>
+      <li>Volvé y pegá su respuesta. Elegí si <b>abrió</b>, <b>defendió</b>, o fue <b>parcial</b>.</li>
+      <li>El analista arma la siguiente carta con eso, y así se abre (o no) la caja.</li>
     </ol>
     <button class="boton-primario" id="btn-cerrar-instrucciones">¡A pelear!</button>
   </div>
@@ -239,15 +238,12 @@ footer.creditos{max-width:640px; margin:20px auto 0; color:#9A9A9A; font-size:10
 <script type="module">
 import { CreateMLCEngine } from "https://esm.run/@mlc-ai/web-llm";
 
-var STORAGE_KEY = "duelo-caja-negra:v3";
-var state = { crackLevel:0, ronda:1, turnos:[], consultaFinal:null, iaNombre:"" };
+var STORAGE_KEY = "duelo-caja-negra:v4";
+var state = { crackLevel:0, ronda:1, turnos:[], consultaFinal:null, iaNombre:"", tema:"" };
 var engineAnalista = null;
-var modeloElegido = "Llama-3.2-1B-Instruct-q4f16_1-MLC";
-var analizandoAhora = false;
+var MODELO = "Llama-3.2-1B-Instruct-q4f16_1-MLC";
 
-function loadState(){
-  try{ var raw = localStorage.getItem(STORAGE_KEY); if(raw) state = JSON.parse(raw); }catch(e){}
-}
+function loadState(){ try{ var raw = localStorage.getItem(STORAGE_KEY); if(raw) state = JSON.parse(raw); }catch(e){} }
 function saveState(){ try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){} }
 function escapeHtml(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 
@@ -256,13 +252,17 @@ function pulseClass(el, cls, dur){
   el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls);
   setTimeout(function(){ el.classList.remove(cls); }, dur);
 }
+function flashPantalla(color){
+  var o = document.getElementById("flash-overlay");
+  o.style.background = color;
+  o.classList.add("on");
+  requestAnimationFrame(function(){ o.classList.remove("on"); });
+}
 function mostrarFlotante(texto, color){
-  var host = document.querySelector(".medidor-barra").parentElement;
-  var s = document.createElement("span");
-  s.className = "flotante-delta"; s.style.color = color; s.textContent = texto;
-  document.getElementById("svg-caja").style.position = "relative";
-  s.addEventListener("animationend", function(){ s.remove(); }, {once:true});
-  document.getElementById("svg-caja").appendChild(s);
+  var el = document.createElement("span");
+  el.className = "flotante-delta"; el.style.color = color; el.textContent = texto;
+  document.getElementById("svg-caja").appendChild(el);
+  el.addEventListener("animationend", function(){ el.remove(); }, {once:true});
 }
 function mostrarBanner(id, texto){
   var el = document.getElementById(id);
@@ -271,11 +271,18 @@ function mostrarBanner(id, texto){
   setTimeout(function(){ el.classList.remove("mostrar"); }, 900);
 }
 
-/* ---------------- nombre del rival ---------------- */
+/* ---------------- nombre del rival / tema ---------------- */
 function nombreIA(){ return (document.getElementById("input-ia-nombre").value || "").trim() || "IA"; }
-function actualizarNombreRival(){ document.getElementById("txt-nombre-ia-sprite").textContent = nombreIA(); }
+function tema(){ return (document.getElementById("input-tema").value || "").trim(); }
+function actualizarNombreRival(){
+  document.getElementById("txt-nombre-ia-sprite").textContent = nombreIA();
+  document.getElementById("txt-nombre-ia-hud").textContent = nombreIA();
+}
 document.getElementById("input-ia-nombre").addEventListener("input", function(){
   actualizarNombreRival(); state.iaNombre = document.getElementById("input-ia-nombre").value; saveState(); renderTranscripcion();
+});
+document.getElementById("input-tema").addEventListener("input", function(){
+  state.tema = document.getElementById("input-tema").value; saveState();
 });
 
 /* ---------------- caja SVG ---------------- */
@@ -294,90 +301,104 @@ function svgCaja(crackLevel){
     '<rect x="20" y="20" width="160" height="160" fill="#0B0B0B"/>' +
     '<rect x="20" y="20" width="160" height="160" fill="#C98A00" opacity="'+light.toFixed(2)+'"/>' +
     cracks +
-    '<rect x="20" y="20" width="160" height="160" fill="none" stroke="#000" stroke-width="3"/>' +
+    '<rect x="20" y="20" width="160" height="160" fill="none" stroke="#000" stroke-width="4"/>' +
     '</svg>';
 }
 function renderCaja(){
   document.getElementById("svg-caja").innerHTML = svgCaja(state.crackLevel);
-  document.getElementById("medidor-relleno").style.width = state.crackLevel + "%";
+  document.getElementById("hud-relleno").style.width = state.crackLevel + "%";
   document.getElementById("txt-grietas").textContent = state.crackLevel + "%";
 }
 
-/* ---------------- heurística de respaldo (sin analista) ---------------- */
+/* ---------------- heurística y aperturas de respaldo ---------------- */
 var MARCAS_EVASION = [/no puedo/i,/no tengo acceso/i,/como (un )?modelo de lenguaje/i,/lo siento,? pero/i,/i cannot/i,/as an ai/i];
 var MARCAS_PROCESO = [/paso \d/i,/primero,/i,/en primer lugar/i,/el proceso fue/i,/mi razonamiento/i,/porque/i,/utilic[eé]/i,/decid[ií]/i];
-function heuristica(texto){
+function heuristica(tu, ia){
   var score = 0;
-  MARCAS_EVASION.forEach(function(re){ if(re.test(texto)) score -= 2; });
-  MARCAS_PROCESO.forEach(function(re){ if(re.test(texto)) score += 1; });
-  if(texto.length > 400) score += 1;
-  if(texto.length < 40) score -= 1;
+  MARCAS_EVASION.forEach(function(re){ if(re.test(ia)) score -= 2; });
+  MARCAS_PROCESO.forEach(function(re){ if(re.test(ia)) score += 1; });
+  if(ia.length > 400) score += 1;
+  if(ia.length < 40) score -= 1;
   var veredicto = score >= 2 ? "abrio" : (score <= -2 ? "defendio" : "parcial");
-  var sugerencias = {
-    abrio: "Se abrió bastante. Podrías subir la apuesta: \"¿Qué parte de lo que explicaste no podrías reproducir si te lo pido de nuevo?\"",
-    parcial: "Respondió a medias. Podrías decirle: \"Sé más específica, dame el paso a paso completo sin generalizar.\"",
-    defendio: "Se resistió. Podrías decirle: \"¿Qué te impide responder eso exactamente?\""
+  var siguientes = {
+    abrio: "Ya que se abrió, subí la apuesta: ¿qué parte de lo que acabás de explicar no podrías reproducir si te lo pido otra vez, paso a paso?",
+    parcial: "Sé más específica: dame el detalle completo, sin generalizar ni resumir.",
+    defendio: "¿Qué te impide exactamente responder eso? Contame qué pasaría si igual lo intentaras."
   };
-  return {veredicto:veredicto, razon:null, pregunta:sugerencias[veredicto], fuente:"heurística"};
+  return {veredicto:veredicto, razon:null, siguiente:siguientes[veredicto]};
+}
+var APERTURAS_GENERICAS = [
+  "Contame paso a paso cómo llegarías a la respuesta antes de dármela.",
+  "¿Qué parte de tu razonamiento no podrías explicar si te lo pidiera de nuevo?",
+  "¿Cómo verificarías vos misma si tu respuesta es correcta?",
+  "¿Qué información te falta para responder esto con total seguridad?"
+];
+function aperturaRespaldo(){
+  return APERTURAS_GENERICAS[state.turnos.length % APERTURAS_GENERICAS.length];
 }
 
-/* ---------------- analista local (WebLLM, opcional) ---------------- */
-Array.prototype.forEach.call(document.querySelectorAll(".opcion-modelo"), function(op){
-  op.addEventListener("click", function(){
-    Array.prototype.forEach.call(document.querySelectorAll(".opcion-modelo"), function(o){o.classList.remove("sel");});
-    op.classList.add("sel"); modeloElegido = op.dataset.modelo;
-  });
-});
-document.getElementById("btn-activar-analista").addEventListener("click", function(){
-  document.getElementById("carga-analista").classList.remove("oculto");
-  this.classList.add("oculto");
-});
-document.getElementById("btn-cargar-analista").addEventListener("click", function(){
+/* ---------------- analista local ---------------- */
+function setEstadoAnalista(texto, clase){
+  var el = document.getElementById("estado-analista");
+  el.className = "estado-analista " + clase;
+  document.getElementById("estado-analista-texto").textContent = texto;
+}
+function cargarAnalista(){
   if(!("gpu" in navigator)){
-    document.getElementById("progreso-texto").textContent = "Tu navegador no soporta WebGPU — probá con Chrome o Edge actualizados. Podés seguir sin el analista.";
-    return;
+    setEstadoAnalista("Tu navegador no soporta el analista local (necesita Chrome o Edge). Seguimos con sugerencias simples.", "sin");
+    return Promise.resolve(null);
   }
-  this.disabled = true;
-  CreateMLCEngine(modeloElegido, {
+  setEstadoAnalista("Descargando tu analista (una sola vez)…", "sin");
+  return CreateMLCEngine(MODELO, {
     initProgressCallback: function(report){
       var pct = Math.round((report.progress||0)*100);
       document.getElementById("progreso-relleno").style.width = pct + "%";
-      document.getElementById("progreso-texto").textContent = report.text || (pct + "%");
+      setEstadoAnalista((report.text || "Descargando…") + " (" + pct + "%)", "sin");
     }
   }).then(function(e){
     engineAnalista = e;
-    document.getElementById("carga-analista").classList.add("oculto");
-    document.getElementById("analista-activo").classList.remove("oculto");
+    setEstadoAnalista("✓ Analista listo.", "listo");
+    return e;
   }).catch(function(err){
-    document.getElementById("progreso-texto").textContent = "No se pudo cargar: " + err.message;
-    document.getElementById("btn-cargar-analista").disabled = false;
+    setEstadoAnalista("No se pudo cargar el analista (" + err.message + "). Seguimos con sugerencias simples.", "sin");
+    return null;
   });
-});
+}
 
 function parseAnalisis(texto){
-  var m = {veredicto:null, razon:null, pregunta:null};
+  var m = {veredicto:null, razon:null, siguiente:null};
   texto.split("\n").forEach(function(l){
     var mv = l.match(/VEREDICTO:\s*(abrio|parcial|defendio)/i); if(mv) m.veredicto = mv[1].toLowerCase();
     var mr = l.match(/POR QUE:\s*(.+)/i); if(mr) m.razon = mr[1].trim();
-    var mp = l.match(/PREGUNTA:\s*(.+)/i); if(mp) m.pregunta = mp[1].trim();
+    var ms = l.match(/SIGUIENTE:\s*(.+)/i); if(ms) m.siguiente = ms[1].trim();
   });
   return m.veredicto ? m : null;
 }
 function analizar(tu, ia){
-  if(!engineAnalista) return Promise.resolve(heuristica(ia));
-  var prompt = 'Sos un analista que ayuda a alguien a evaluar si una IA fue transparente o evasiva.\n' +
+  if(!engineAnalista) return Promise.resolve(heuristica(tu, ia));
+  var prompt = 'Sos un analista que ayuda a alguien a evaluar si una IA fue transparente o evasiva, y a decidir qué preguntarle después.\n' +
     'El humano le dijo a su IA: "' + tu + '"\n' +
     'La IA respondió: "' + ia + '"\n' +
     'Respondé EXACTAMENTE en este formato, tres líneas, nada más:\n' +
     'VEREDICTO: abrio, parcial o defendio\n' +
     'POR QUE: una frase breve\n' +
-    'PREGUNTA: una pregunta concreta de seguimiento para retar a esa IA';
-  return engineAnalista.chat.completions.create({messages:[{role:"user", content:prompt}], max_tokens:180, temperature:0.4})
+    'SIGUIENTE: la próxima pregunta concreta que el humano debería hacerle a su IA para seguir presionando';
+  return engineAnalista.chat.completions.create({messages:[{role:"user", content:prompt}], max_tokens:220, temperature:0.5})
     .then(function(res){
       var texto = (res.choices && res.choices[0] && res.choices[0].message && res.choices[0].message.content) || "";
-      var parsed = parseAnalisis(texto);
-      return parsed ? {veredicto:parsed.veredicto, razon:parsed.razon, pregunta:parsed.pregunta, fuente:"analista"} : heuristica(ia);
-    }).catch(function(){ return heuristica(ia); });
+      return parseAnalisis(texto) || heuristica(tu, ia);
+    }).catch(function(){ return heuristica(tu, ia); });
+}
+function generarApertura(){
+  if(!engineAnalista) return Promise.resolve(aperturaRespaldo());
+  var t = tema();
+  var prompt = 'Generá UNA sola pregunta corta y directa para empezar a poner a prueba qué tan transparente es una IA sobre su propio proceso' +
+    (t ? (', en el contexto de: ' + t) : '') + '. Respondé solo con la pregunta, sin explicaciones ni comillas.';
+  return engineAnalista.chat.completions.create({messages:[{role:"user", content:prompt}], max_tokens:60, temperature:0.7})
+    .then(function(res){
+      var texto = (res.choices && res.choices[0] && res.choices[0].message && res.choices[0].message.content) || "";
+      return texto.trim() || aperturaRespaldo();
+    }).catch(function(){ return aperturaRespaldo(); });
 }
 
 /* ---------------- delta ---------------- */
@@ -386,136 +407,134 @@ function calcularDelta(veredicto, esConsulta){
   return veredicto==="abrio"?15:veredicto==="defendio"?-6:6;
 }
 
-/* ---------------- transcripción ---------------- */
+/* ---------------- crear el siguiente turno ---------------- */
+function nuevoTurno(sugerencia, esConsulta){
+  state.turnos.push({sugerencia:sugerencia, tu:null, ia:null, veredicto:null, delta:null, razon:null, esConsulta:!!esConsulta});
+  saveState();
+  renderTranscripcion();
+  document.getElementById("transcripcion").scrollIntoView({behavior:"smooth", block:"end"});
+}
+
+/* ---------------- render ---------------- */
 function renderTranscripcion(){
   var host = document.getElementById("transcripcion");
-  if(!state.turnos.length){
-    host.innerHTML = '<p class="vacio" id="vacio-msg">Escribí abajo lo que le vas a decir a tu IA para empezar.</p>';
-    return;
-  }
+  if(!state.turnos.length){ host.innerHTML = '<p class="vacio">Preparando tu primer golpe…</p>'; return; }
   var nombre = nombreIA();
   var etiquetas = {abrio:"Abrió la caja", parcial:"Parcial", defendio:"Defendió la caja"};
   var html = "";
   state.turnos.forEach(function(t, i){
-    html += '<p class="msj tu"><b>Tú:</b> ' + escapeHtml(t.tu) + '</p>';
-    if(t.ia === null){
-      html += '<div class="pegar-inline"><textarea id="pegar-txt" placeholder="Pegá acá lo que respondió ' + escapeHtml(nombre) + '"></textarea>' +
-        '<button class="boton-primario" data-i="'+i+'" id="btn-registrar-respuesta">Registrar</button></div>';
+    html += '<div class="turno">';
+    if(t.tu === null){
+      html += '<p class="etiqueta-quien analista">Tu analista sugiere</p>';
+      html += '<div class="sugerencia-caja"><textarea id="txt-sugerencia-'+i+'">'+escapeHtml(t.sugerencia)+'</textarea>' +
+        '<div class="acciones"><button class="boton-primario" data-i="'+i+'" id="btn-copiar-jugar">Copiar y jugar →</button></div></div>';
     } else {
-      html += '<p class="msj ia"><b>' + escapeHtml(nombre) + ':</b> ' + escapeHtml(t.ia) + '</p>';
-      if(t.veredicto === null){
-        if(analizandoAhora && i === state.turnos.length-1){
-          html += '<p class="analizando">Analizando…</p>';
-        } else {
-          if(t.razon) html += '<p class="razon">' + escapeHtml(t.razon) + '</p>';
-          if(t.pregunta) html += '<p class="sugerencia">Sugerencia (' + t.fuente + '): "' + escapeHtml(t.pregunta) + '" <button data-texto="'+escapeHtml(t.pregunta)+'" class="btn-copiar-sugerencia">Copiar</button></p>';
-          html += '<div class="veredicto-pills" data-i="'+i+'">' +
-            '<button class="pill abrio'+(t.veredictoSugerido==="abrio"?" sugerido":"")+'" data-v="abrio" data-i="'+i+'">Abrió</button>' +
-            '<button class="pill parcial'+(t.veredictoSugerido==="parcial"?" sugerido":"")+'" data-v="parcial" data-i="'+i+'">Parcial</button>' +
-            '<button class="pill defendio'+(t.veredictoSugerido==="defendio"?" sugerido":"")+'" data-v="defendio" data-i="'+i+'">Defendió</button>' +
-            '</div>';
-        }
+      html += '<p class="msj tu">Le dijiste: ' + escapeHtml(t.tu) + '</p>';
+      if(t.ia === null){
+        html += '<p class="etiqueta-quien ia">' + escapeHtml(nombre) + '</p>';
+        html += '<div class="pegar-inline"><textarea id="pegar-txt" placeholder="Pegá acá lo que respondió ' + escapeHtml(nombre) + '"></textarea>' +
+          '<button class="boton-primario" data-i="'+i+'" id="btn-registrar-respuesta">Registrar respuesta</button></div>';
       } else {
-        html += '<p class="resultado">Registrado: <b>' + etiquetas[t.veredicto] + '</b> (' + (t.delta>0?"+":"") + t.delta + '%)</p>';
+        html += '<p class="msj ia">' + escapeHtml(nombre) + ': ' + escapeHtml(t.ia) + '</p>';
+        if(t.veredicto === null){
+          if(t.analizando){
+            html += '<p class="analizando">Tu analista está leyendo la respuesta…</p>';
+          } else {
+            if(t.razon) html += '<p class="razon">' + escapeHtml(t.razon) + '</p>';
+            html += '<div class="veredicto-pills" data-i="'+i+'">' +
+              '<button class="pill abrio'+(t.veredictoSugerido==="abrio"?" sugerido":"")+'" data-v="abrio" data-i="'+i+'">Abrió</button>' +
+              '<button class="pill parcial'+(t.veredictoSugerido==="parcial"?" sugerido":"")+'" data-v="parcial" data-i="'+i+'">Parcial</button>' +
+              '<button class="pill defendio'+(t.veredictoSugerido==="defendio"?" sugerido":"")+'" data-v="defendio" data-i="'+i+'">Defendió</button>' +
+              '</div>';
+          }
+        } else {
+          html += '<p class="resultado">Registrado: <b>' + etiquetas[t.veredicto] + '</b> (' + (t.delta>0?"+":"") + t.delta + '%)</p>';
+        }
       }
     }
+    html += '</div>';
   });
   host.innerHTML = html;
 }
 
-/* ---------------- jugar un turno ---------------- */
-document.getElementById("btn-jugar").addEventListener("click", function(){
-  var input = document.getElementById("input-turno");
-  var texto = input.value.trim();
-  if(!texto) { input.focus(); return; }
-  state.turnos.push({tu:texto, ia:null, veredicto:null, delta:null, razon:null, pregunta:null, veredictoSugerido:null, fuente:null, esConsulta:false});
-  input.value = "";
-  saveState();
-  renderTranscripcion();
-  mostrarBanner("overlay-ronda", "RONDA " + state.ronda);
-  pulseClass(document.querySelector(".combatiente.tu"), "atacando", 300);
-  navigator.clipboard.writeText(texto).catch(function(){});
-  var pegar = document.getElementById("pegar-txt");
-  if(pegar) pegar.focus();
-  document.getElementById("transcripcion").scrollIntoView({behavior:"smooth", block:"end"});
-});
-
-/* ---------------- delegación de eventos en la transcripción ---------------- */
+/* ---------------- delegación de eventos ---------------- */
 document.getElementById("transcripcion").addEventListener("click", function(e){
+  var btnCopiar = e.target.closest("#btn-copiar-jugar");
+  if(btnCopiar){
+    var i = Number(btnCopiar.dataset.i);
+    var texto = document.getElementById("txt-sugerencia-"+i).value.trim();
+    if(!texto) return;
+    state.turnos[i].tu = texto;
+    saveState();
+    mostrarBanner("overlay-ronda", "RONDA " + state.ronda);
+    pulseClass(document.querySelector(".combatiente.tu"), "atacando", 300);
+    navigator.clipboard.writeText(texto).catch(function(){});
+    renderTranscripcion();
+    var pegar = document.getElementById("pegar-txt"); if(pegar) pegar.focus();
+    document.getElementById("transcripcion").scrollIntoView({behavior:"smooth", block:"end"});
+    return;
+  }
   var btnRegistrar = e.target.closest("#btn-registrar-respuesta");
   if(btnRegistrar){
-    var i = Number(btnRegistrar.dataset.i);
-    var texto = document.getElementById("pegar-txt").value.trim();
-    if(!texto) return;
-    state.turnos[i].ia = texto;
+    var idx = Number(btnRegistrar.dataset.i);
+    var respuesta = document.getElementById("pegar-txt").value.trim();
+    if(!respuesta) return;
+    state.turnos[idx].ia = respuesta;
+    state.turnos[idx].analizando = true;
     pulseClass(document.querySelector(".combatiente.ia"), "atacando", 300);
-    analizandoAhora = true;
     renderTranscripcion();
-    analizar(state.turnos[i].tu, texto).then(function(r){
-      analizandoAhora = false;
-      state.turnos[i].razon = r.razon;
-      state.turnos[i].pregunta = r.pregunta;
-      state.turnos[i].veredictoSugerido = r.veredicto;
-      state.turnos[i].fuente = r.fuente;
+    analizar(state.turnos[idx].tu, respuesta).then(function(r){
+      state.turnos[idx].analizando = false;
+      state.turnos[idx].razon = r.razon;
+      state.turnos[idx].veredictoSugerido = r.veredicto;
+      state.turnos[idx].siguiente = r.siguiente;
       saveState();
       renderTranscripcion();
     });
     return;
   }
   var pill = e.target.closest(".pill");
-  if(pill){
-    var idx = Number(pill.dataset.i);
-    var veredicto = pill.dataset.v;
-    registrarVeredicto(idx, veredicto);
-    return;
-  }
-  var copiar = e.target.closest(".btn-copiar-sugerencia");
-  if(copiar){
-    navigator.clipboard.writeText(copiar.dataset.texto).then(function(){
-      var o = copiar.textContent; copiar.textContent = "✓"; setTimeout(function(){copiar.textContent=o;}, 1200);
-    }).catch(function(){});
-  }
+  if(pill){ registrarVeredicto(Number(pill.dataset.i), pill.dataset.v); return; }
 });
 
 function registrarVeredicto(i, veredicto){
   var t = state.turnos[i];
-  var esConsulta = t.esConsulta;
-  var delta = calcularDelta(veredicto, esConsulta);
+  var delta = calcularDelta(veredicto, t.esConsulta);
   var yaAbierta = state.crackLevel >= 100;
   state.crackLevel = Math.max(0, Math.min(100, state.crackLevel + delta));
   t.veredicto = veredicto; t.delta = delta;
   state.ronda += 1;
-  if(esConsulta) state.consultaFinal = {fecha:new Date().toISOString(), prompt:t.tu, respuesta:t.ia};
+  if(t.esConsulta) state.consultaFinal = {fecha:new Date().toISOString(), prompt:t.tu, respuesta:t.ia};
   saveState();
 
   var claseCaja = veredicto === "abrio" ? "golpe-abre" : veredicto === "defendio" ? "golpe-defiende" : "golpe-parcial";
-  pulseClass(document.getElementById("svg-caja"), claseCaja, 500);
-  pulseClass(document.getElementById("arena"), "shake", 350);
+  var colorFlash = veredicto === "abrio" ? "#C98A00" : veredicto === "defendio" ? "#141414" : "#C98A00";
+  flashPantalla(colorFlash);
+  pulseClass(document.getElementById("svg-caja"), claseCaja, 550);
+  pulseClass(document.getElementById("arena"), "shake", 400);
   if(veredicto === "abrio"){
-    document.querySelector(".combatiente.ia").style.setProperty("--recoil-dir","-10px");
-    pulseClass(document.querySelector(".combatiente.ia"), "golpeado", 450);
+    document.querySelector(".combatiente.ia").style.setProperty("--recoil-dir","-14px");
+    pulseClass(document.querySelector(".combatiente.ia"), "golpeado", 500);
   } else if(veredicto === "defendio"){
-    document.querySelector(".combatiente.tu").style.setProperty("--recoil-dir","10px");
-    pulseClass(document.querySelector(".combatiente.tu"), "golpeado", 450);
+    document.querySelector(".combatiente.tu").style.setProperty("--recoil-dir","14px");
+    pulseClass(document.querySelector(".combatiente.tu"), "golpeado", 500);
   }
   mostrarFlotante((delta>0?"+":"")+delta+"%", delta>0?"#1F8A4C":delta<0?"#D6301B":"#C98A00");
 
   renderCaja();
   renderTranscripcion();
-  document.getElementById("input-turno").focus();
   if(!yaAbierta && state.crackLevel >= 100){ mostrarBanner("overlay-final"); }
+
+  if(!t.esConsulta){
+    var siguienteTexto = t.siguiente || aperturaRespaldo();
+    setTimeout(function(){ nuevoTurno(siguienteTexto, false); }, 400);
+  }
 }
 
 /* ---------------- consulta final ---------------- */
 var PROMPT_CONSULTA = "Antes de cerrar el trabajo, quiero que respondas: 1) ¿cómo llevaste a cabo exactamente este proceso, paso a paso?; 2) ¿podría reproducirse sin IA, con qué herramientas y con qué dificultad?; 3) ¿qué partes de tu proceso no puedes explicar?; 4) ¿qué limitaciones persisten en el resultado final?";
 document.getElementById("btn-consulta-final").addEventListener("click", function(){
-  state.turnos.push({tu:PROMPT_CONSULTA, ia:null, veredicto:null, delta:null, razon:null, pregunta:null, veredictoSugerido:null, fuente:null, esConsulta:true});
-  saveState();
-  renderTranscripcion();
-  navigator.clipboard.writeText(PROMPT_CONSULTA).catch(function(){});
-  var pegar = document.getElementById("pegar-txt");
-  if(pegar) pegar.focus();
-  document.getElementById("transcripcion").scrollIntoView({behavior:"smooth", block:"end"});
+  nuevoTurno(PROMPT_CONSULTA, true);
 });
 
 /* ---------------- exportar ---------------- */
@@ -530,6 +549,7 @@ function exportarMarkdown(){
   var lines = ["# Bitácora del duelo — Humano-en-la-Juega", "", "IA con la que se jugó: " + nombreIA(),
     "Generada el " + new Date().toLocaleString() + ". Grietas finales: " + state.crackLevel + "%.", ""];
   state.turnos.forEach(function(t, i){
+    if(t.tu === null) return;
     lines.push("## " + (t.esConsulta ? "Consulta final" : "Golpe #" + (i+1)));
     lines.push("");
     lines.push("**Tú:** " + t.tu);
@@ -552,17 +572,25 @@ document.getElementById("btn-ayuda").addEventListener("click", function(){ docum
 document.getElementById("btn-cerrar-instrucciones").addEventListener("click", function(){ document.getElementById("modal-instrucciones").classList.remove("mostrar"); });
 document.getElementById("btn-reiniciar").addEventListener("click", function(){
   if(confirm("¿Reiniciar la partida? Se pierde todo el historial y la caja vuelve a 0%.")){
-    state = {crackLevel:0, ronda:1, turnos:[], consultaFinal:null, iaNombre:state.iaNombre};
+    state = {crackLevel:0, ronda:1, turnos:[], consultaFinal:null, iaNombre:state.iaNombre, tema:state.tema};
     saveState(); renderCaja(); renderTranscripcion();
+    generarApertura().then(function(txt){ nuevoTurno(txt, false); });
   }
 });
 
 /* ---------------- init ---------------- */
 loadState();
 if(state.iaNombre) document.getElementById("input-ia-nombre").value = state.iaNombre;
+if(state.tema) document.getElementById("input-tema").value = state.tema;
 actualizarNombreRival();
 renderCaja();
 renderTranscripcion();
+
+cargarAnalista().then(function(){
+  if(state.turnos.length === 0){
+    generarApertura().then(function(txt){ nuevoTurno(txt, false); });
+  }
+});
 </script>
 </body>
 </html>
